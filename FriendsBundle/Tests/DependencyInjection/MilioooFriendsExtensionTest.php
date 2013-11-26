@@ -39,12 +39,14 @@ class MilioooFriendsExtensionTest extends \PHPUnit_Framework_TestCase
     {
         $this->createEmptyConfiguration();
         $this->assertParameter('\Acme\MyBundle\Entity\Relationship', 'miliooo_friends.relationship_class');
+        $this->assertParameter('miliooo_friends.relationship_creator.default', 'miliooo_friends.relationship_creator');
     }
 
     public function testServicesExist()
     {
         $this->createEmptyConfiguration();
         $this->assertHasDefinition('miliooo_friends.repository.relationship');
+        $this->assertHasDefinition('miliooo_friends.relationship_creator.default');
     }
 
 

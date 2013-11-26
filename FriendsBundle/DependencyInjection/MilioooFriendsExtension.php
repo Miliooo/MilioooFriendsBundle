@@ -34,5 +34,6 @@ class MilioooFriendsExtension extends Extension
         $loader->load('services.xml');
 
         $container->setParameter('miliooo_friends.relationship_class', $config['relationship_class']);
+        $container->setParameter('miliooo_friends.relationship_creator', $config['relationship_creator']);
     }
 }
