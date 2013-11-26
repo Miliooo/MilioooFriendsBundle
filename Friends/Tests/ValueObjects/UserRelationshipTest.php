@@ -20,7 +20,6 @@ use Miliooo\Friends\TestHelpers\UserRelationshipTestHelper;
  */
 class UserRelationshipTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * @expectedException \Miliooo\Friends\Exceptions\IdenticalFollowerFollowedException
      */
@@ -40,5 +39,4 @@ class UserRelationshipTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($follower, $userRelationship->getFollower());
         $this->assertEquals($followed, $userRelationship->getFollowed());
     }
-
 }
