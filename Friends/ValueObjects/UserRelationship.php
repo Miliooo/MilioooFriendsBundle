@@ -42,8 +42,7 @@ class UserRelationship
      */
     public function __construct(UserRelationshipInterface $follower, UserRelationshipInterface $followed)
     {
-        if($follower->getUserRelationshipId() === $followed->getUserRelationshipId())
-        {
+        if ($follower->getUserRelationshipId() === $followed->getUserRelationshipId()) {
             throw new IdenticalFollowerFollowedException();
         }
 
