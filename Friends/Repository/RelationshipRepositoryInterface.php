@@ -10,7 +10,7 @@
 
 namespace Miliooo\Friends\Repository;
 
-use Miliooo\Friends\Model\Relationship;
+use Miliooo\Friends\Model\RelationshipInterface;
 use Miliooo\Friends\ValueObjects\UserRelationship;
 
 /**
@@ -25,22 +25,22 @@ interface RelationshipRepositoryInterface
      *
      * @param UserRelationship $userRelationship
      *
-     * @return Relationship|null The relationship or null when not found
+     * @return RelationshipInterface|null The relationship or null when not found
      */
     public function findRelationship(UserRelationship $userRelationship);
 
     /**
      * Saves a relationship
      *
-     * @param Relationship $relationship The relationship we save
-     * @param boolean      $flush        Whether to flush or not defaults to true
+     * @param RelationshipInterface $relationship The relationship we save
+     * @param boolean               $flush        Whether to flush or not defaults to true
      */
-    public function saveRelationship(Relationship $relationship, $flush = true);
+    public function saveRelationship(RelationshipInterface $relationship, $flush = true);
 
     /**
      * Deletes a relationship
      *
-     * @param Relationship $relationship The relationship we want to delete
+     * @param RelationshipInterface $relationship The relationship we want to delete
      */
-    public function deleteRelationship(Relationship $relationship);
+    public function deleteRelationship(RelationshipInterface $relationship);
 }

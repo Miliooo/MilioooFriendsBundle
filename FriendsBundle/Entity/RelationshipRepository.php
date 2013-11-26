@@ -11,7 +11,7 @@
 namespace Miliooo\FriendsBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
-use Miliooo\Friends\Model\Relationship;
+use Miliooo\Friends\Model\RelationshipInterface;
 use Miliooo\Friends\Repository\RelationshipRepositoryInterface;
 use Miliooo\Friends\ValueObjects\UserRelationship;
 
@@ -38,7 +38,7 @@ class RelationshipRepository extends EntityRepository implements RelationshipRep
     /**
      * {@inheritdoc}
      */
-    public function saveRelationship(Relationship $relationship, $flush = true)
+    public function saveRelationship(RelationshipInterface $relationship, $flush = true)
     {
         $em = $this->getEntityManager();
         $em->persist($relationship);
@@ -51,7 +51,7 @@ class RelationshipRepository extends EntityRepository implements RelationshipRep
     /**
      * {@inheritdoc}
      */
-    public function deleteRelationship(Relationship $relationship)
+    public function deleteRelationship(RelationshipInterface $relationship)
     {
         $em = $this->getEntityManager();
         $em->remove($relationship);
