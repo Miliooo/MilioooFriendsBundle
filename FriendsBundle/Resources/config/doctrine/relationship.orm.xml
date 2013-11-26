@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <mapped-superclass name="Miliooo\FriendsBundle\Entity\Relationship">
+
+        <field name="dateCreated" column="date_created" type="datetime"/>
+
+        <!--<many-to-one field="follower" target-entity="MyProject\UserBundle\Entity\User" /> -->
+        <!--<many-to-one field="followed" target-entity="MyProject\UserBundle\Entity\User" /> -->
+
+    </mapped-superclass>
+
+</doctrine-mapping>
