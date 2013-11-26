@@ -11,6 +11,7 @@
 namespace Miliooo\Friends\Model;
 
 use Miliooo\Friends\User\UserRelationshipInterface;
+use Miliooo\Friends\ValueObjects\UserRelationship;
 
 /**
  * The Relationship model
@@ -43,14 +44,13 @@ class Relationship implements RelationshipInterface
     /**
      * Constructor.
      *
-     * @param UserRelationshipInterface $follower    The user who decides to follow another user (= follower)
-     * @param UserRelationshipInterface $followed    The user who is being followed (=followed)
-     * @param \DateTime                 $dateCreated The date the relationship was created
+     * @param UserRelationship $userRelationship An user relationship instance
+     * @param \DateTime        $dateCreated      The date the relationship was created
      */
-    public function __construct(UserRelationshipInterface $follower, UserRelationshipInterface $followed, \DateTime $dateCreated)
+    public function __construct(UserRelationship $userRelationship, \DateTime $dateCreated)
     {
-        $this->follower = $follower;
-        $this->followed = $followed;
+        $this->follower = $userRelationship->getFollower();
+        $this->followed = $userRelationship->getFollowed();
         $this->dateCreated = $dateCreated;
     }
 

@@ -13,6 +13,7 @@ namespace Miliooo\Friends\Tests\Model;
 use Miliooo\Friends\Model\Relationship;
 use Miliooo\Friends\TestHelpers\UserRelationshipTestHelper;
 use Miliooo\Friends\User\UserRelationshipInterface;
+use Miliooo\Friends\ValueObjects\UserRelationship;
 
 /**
  * Test file for Miliooo\Friends\Model\Relationship
@@ -45,7 +46,8 @@ class RelationshipTest extends \PHPUnit_Framework_TestCase
 
     public function testGetters()
     {
-        $relationship = new Relationship($this->follower, $this->followed, $this->dateCreated);
+        $userRelationship = new UserRelationship($this->follower, $this->followed);
+        $relationship = new Relationship($userRelationship, $this->dateCreated);
 
         $this->assertEquals($this->follower->getUserRelationshipId(), $relationship->getFollower()->getUserRelationshipId());
         $this->assertEquals($this->followed->getUserRelationshipId(), $relationship->getFollowed()->getUserRelationshipId());
