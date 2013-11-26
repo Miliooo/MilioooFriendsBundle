@@ -13,7 +13,8 @@
     ],
     "require": {
         "php": ">=5.4",
-        "doctrine/orm": ">=2.2,<2.5-dev"
+        "doctrine/orm": ">=2.2,<2.5-dev",
+        "symfony/framework-bundle": "~2.3"
     },
     "require-dev": {
         "satooshi/php-coveralls": "dev-master"
