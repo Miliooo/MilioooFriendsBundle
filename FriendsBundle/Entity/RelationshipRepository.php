@@ -8,7 +8,7 @@
 * with this source code in the file LICENSE.
 */
 
-namespace Miliooo\FriendsBundle\Tests\Entity;
+namespace Miliooo\FriendsBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 use Miliooo\Friends\Model\Relationship;
@@ -27,7 +27,12 @@ class RelationshipRepository extends EntityRepository implements RelationshipRep
      */
     public function findRelationship(UserRelationship $userRelationship)
     {
-        // TODO: Implement findRelationship() method.
+        return $this->findOneBy(
+            [
+                'follower' => $userRelationship->getFollower(),
+                'followed' => $userRelationship->getFollowed()
+            ]
+        );
     }
 
     /**
@@ -38,8 +43,7 @@ class RelationshipRepository extends EntityRepository implements RelationshipRep
         $em = $this->getEntityManager();
         $em->persist($relationship);
 
-        if($flush)
-        {
+        if($flush) {
             $em->flush();
         }
     }
