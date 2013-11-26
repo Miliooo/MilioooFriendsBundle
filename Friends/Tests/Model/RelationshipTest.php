@@ -16,7 +16,7 @@ use Miliooo\Friends\User\UserRelationshipInterface;
 use Miliooo\Friends\ValueObjects\UserRelationship;
 
 /**
- * Test file for Miliooo\Friends\Model\Relationship
+ * Test file for Miliooo\Friends\Entity\Relationship
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
@@ -37,11 +37,20 @@ class RelationshipTest extends \PHPUnit_Framework_TestCase
      */
     private $dateCreated;
 
+    /**
+     * The class under test.
+     *
+     * @var Relationship
+     */
+    private $relationship;
+
     public function setUp()
     {
         $this->follower = new UserRelationshipTestHelper('1');
         $this->followed = new UserRelationshipTestHelper('2');
         $this->dateCreated = new \DateTime('2013-10-10 00:00:00');
+        $userRelationship = new UserRelationship($this->follower, $this->followed);
+        $this->relationship = new Relationship($userRelationship, $this->dateCreated);
     }
 
     public function testGetters()
@@ -49,8 +58,15 @@ class RelationshipTest extends \PHPUnit_Framework_TestCase
         $userRelationship = new UserRelationship($this->follower, $this->followed);
         $relationship = new Relationship($userRelationship, $this->dateCreated);
 
-        $this->assertEquals($this->follower->getUserRelationshipId(), $relationship->getFollower()->getUserRelationshipId());
-        $this->assertEquals($this->followed->getUserRelationshipId(), $relationship->getFollowed()->getUserRelationshipId());
+        $this->assertEquals($this->follower, $this->relationship->getFollower());
+        $this->assertEquals($this->followed, $this->relationship->getFollowed());
         $this->assertEquals($this->dateCreated, $relationship->getDateCreated());
+    }
+
+    public function testAttributes()
+    {
+        $this->assertClassHasAttribute('follower', 'Miliooo\Friends\Model\Relationship');
+        $this->assertClassHasAttribute('followed', 'Miliooo\Friends\Model\Relationship');
+        $this->assertClassHasAttribute('dateCreated', 'Miliooo\Friends\Model\Relationship');
     }
 }
