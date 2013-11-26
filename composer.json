@@ -1,0 +1,29 @@
+{
+    "name": "miliooo/friends-bundle",
+    "type": "symfony-bundle",
+    "description": "Allows users to follow each other or become friends",
+    "keywords": ["symfony", "friends", "follower", "friendship"],
+    "homepage": "https://github.com/Miliooo/MilioooFriendsBundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Michiel Boeckaert",
+            "email": "boeckaert@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4",
+        "doctrine/orm": ">=2.2,<2.5-dev"
+    },
+    "autoload": {
+        "psr-0": {
+            "Miliooo": ""
+        }
+    },
+    "target-dir": "Miliooo",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "master-dev"
+        }
+    }
+}
