@@ -19,7 +19,7 @@ use Miliooo\Friends\User\UserRelationshipInterface;
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
-class UserRelationshipProviderSecurityContextTest extends \PHPUnit_Framework_TestCase
+class LoggedInUserProviderSecurityContextTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * The class under test
