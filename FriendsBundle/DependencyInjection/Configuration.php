@@ -32,6 +32,7 @@ class Configuration implements ConfigurationInterface
             ->children()
             ->scalarNode('relationship_class')->isRequired()->cannotBeEmpty()->end()
             ->scalarNode('relationship_creator')->defaultValue('miliooo_friends.relationship_creator.default')->cannotBeEmpty()->end()
+            ->scalarNode('user_relationship_provider')->defaultValue('miliooo_friends.user_relationship_provider.default')->cannotBeEmpty()->end()
             ;
 
         return $treeBuilder;

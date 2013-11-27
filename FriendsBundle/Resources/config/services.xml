@@ -19,6 +19,10 @@
             <argument>%miliooo_friends.relationship_class%</argument>
         </service>
 
+        <service id="miliooo_friends.user_relationship_provider.default" class="Miliooo\Friends\User\UserRelationshipProviderSecurityContext">
+            <argument type="service" id="security.context"/>
+        </service>
+
     </services>
 
 </container>
