@@ -60,7 +60,7 @@ class RelationshipCreatorTest extends \PHPUnit_Framework_TestCase
     /**
      * @var UserRelationshipInterface
      */
-    private$followed;
+    private $followed;
 
     public function setUp()
     {
