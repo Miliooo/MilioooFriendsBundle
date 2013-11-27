@@ -32,6 +32,7 @@ class MilioooFriendsExtension extends Extension
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.xml');
+        $loader->load('controllers.xml');
 
         $container->setParameter('miliooo_friends.relationship_class', $config['relationship_class']);
         $container->setAlias('miliooo_friends.relationship_creator', $config['relationship_creator']);

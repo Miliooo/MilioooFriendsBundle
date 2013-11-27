@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service id="miliooo_friends.controller.add_friends_controller" class="Miliooo\FriendsBundle\Controller\AddFriendController">
+            <argument type="service" id="miliooo_friends.relationship_creator" />
+            <argument type="service" id="miliooo_friends.user_relationship_provider" />
+            <argument type="service" id="miliooo_friends.user_relationship_transformer" />
+
+        </service>
+
+    </services>
+
+</container>
