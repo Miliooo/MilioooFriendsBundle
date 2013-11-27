@@ -14,11 +14,11 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
 /**
- * Class UserRelationshipProviderSecurityContext
+ * Class LoggedInUserProviderSecurityContext
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
-class UserRelationshipProviderSecurityContext implements UserRelationshipProviderInterface
+class LoggedInUserProviderSecurityContext implements LoggedInUserProviderInterface
 {
     /**
      * A security context instance.

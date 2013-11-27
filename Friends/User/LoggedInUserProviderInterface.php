@@ -17,7 +17,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
-interface UserRelationshipProviderInterface
+interface LoggedInUserProviderInterface
 {
     /**
      * Gets the authenticated User.

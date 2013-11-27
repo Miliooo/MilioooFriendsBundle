@@ -10,12 +10,12 @@
 
 namespace Miliooo\Friends\Tests\User;
 
-use Miliooo\Friends\User\UserRelationshipProviderSecurityContext;
+use Miliooo\Friends\User\LoggedInUserProviderSecurityContext;
 use Miliooo\Friends\TestHelpers\UserRelationshipTestHelper;
 use Miliooo\Friends\User\UserRelationshipInterface;
 
 /**
- * Test file for Miliooo\Friends\User\UserRelationshipProviderSecurityContext
+ * Test file for Miliooo\Friends\User\LoggedInUserProviderSecurityContext
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
@@ -24,7 +24,7 @@ class UserRelationshipProviderSecurityContextTest extends \PHPUnit_Framework_Tes
     /**
      * The class under test
      *
-     * @var UserRelationshipProviderSecurityContext
+     * @var LoggedInUserProviderSecurityContext
      */
     private $provider;
 
@@ -48,12 +48,12 @@ class UserRelationshipProviderSecurityContextTest extends \PHPUnit_Framework_Tes
         $this->securityContext = $this->getMock('Symfony\Component\Security\Core\SecurityContextInterface');
         $this->securityToken = $this->getMock('Symfony\Component\Security\Core\Authentication\Token\TokenInterface');
         $this->loggedInUser = new UserRelationshipTestHelper('1');
-        $this->provider = new UserRelationshipProviderSecurityContext($this->securityContext);
+        $this->provider = new LoggedInUserProviderSecurityContext($this->securityContext);
     }
 
     public function testInterface()
     {
-        $this->assertInstanceOf('Miliooo\Friends\User\UserRelationshipProviderInterface', $this->provider);
+        $this->assertInstanceOf('Miliooo\Friends\User\LoggedInUserProviderInterface', $this->provider);
     }
 
     /**
