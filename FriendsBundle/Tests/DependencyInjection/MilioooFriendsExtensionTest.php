@@ -50,6 +50,7 @@ class MilioooFriendsExtensionTest extends \PHPUnit_Framework_TestCase
         $this->assertHasDefinition('miliooo_friends.user_relationship_provider');
         $this->assertHasDefinition('miliooo_friends.user_relationship_provider.default');
         $this->assertHasDefinition('miliooo_friends.controller.add_friends_controller');
+        $this->assertHasDefinition('miliooo_friends.user_relationship_transformer');
     }
 
 
