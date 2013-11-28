@@ -12,6 +12,7 @@ namespace Miliooo\Friends\Repository;
 
 use Miliooo\Friends\Model\RelationshipInterface;
 use Miliooo\Friends\ValueObjects\UserRelationship;
+use Miliooo\Friends\User\UserRelationshipInterface;
 
 /**
  * Class RelationshipRepositoryInterface
@@ -44,4 +45,23 @@ interface RelationshipRepositoryInterface
      * @param boolean               $flush        Whether to flush or not defaults to true
      */
     public function deleteRelationship(RelationshipInterface $relationship, $flush = true);
+
+
+    /**
+     * Gets the persons the current user is following.
+     *
+     * @param UserRelationshipInterface $user
+     *
+     * @return RelationshipInterface[] An array with relationships
+     */
+    public function getFollowing(UserRelationshipInterface $user);
+
+    /**
+     * Gets the persons who follow the current user.
+     *
+     * @param UserRelationshipInterface $user
+     *
+     * @return RelationshipInterface[] An array with relationships
+     */
+    public function getFollowers(UserRelationshipInterface $user);
 }

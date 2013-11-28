@@ -13,6 +13,7 @@ namespace Miliooo\FriendsBundle\Entity;
 use Doctrine\ORM\EntityRepository;
 use Miliooo\Friends\Model\RelationshipInterface;
 use Miliooo\Friends\Repository\RelationshipRepositoryInterface;
+use Miliooo\Friends\User\UserRelationshipInterface;
 use Miliooo\Friends\ValueObjects\UserRelationship;
 
 /**
@@ -59,5 +60,21 @@ class RelationshipRepository extends EntityRepository implements RelationshipRep
         if ($flush) {
             $em->flush();
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getFollowing(UserRelationshipInterface $user)
+    {
+        return $this->findBy(['follower' => $user]);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getFollowers(UserRelationshipInterface $user)
+    {
+        return $this->findBy(['followed' => $user]);
     }
 }
