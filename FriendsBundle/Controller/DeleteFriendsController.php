@@ -16,6 +16,10 @@ use Miliooo\Friends\ValueObjects\UserRelationship;
 use Miliooo\Friends\Repository\RelationshipRepositoryInterface;
 use Miliooo\Friends\Deleter\RelationshipDeleterSecureInterface;
 use Symfony\Component\HttpFoundation\Response;
+use Miliooo\Friends\Exceptions\FriendException;
+use Miliooo\Friends\Exceptions\IdenticalFollowerFollowedException;
+use Miliooo\Friends\User\UserRelationshipInterface;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * The delete friends controller is responsible for deleting relationships
@@ -54,7 +58,8 @@ class DeleteFriendsController
         UserRelationshipTransformerInterface $transformer,
         RelationshipRepositoryInterface $repository,
         RelationshipDeleterSecureInterface $deleter
-    ) {
+    )
+    {
         $this->loggedInUserProvider = $loggedInUserProvider;
         $this->transformer = $transformer;
         $this->repository = $repository;
@@ -72,14 +77,26 @@ class DeleteFriendsController
     {
         $loggedInUser = $this->loggedInUserProvider->getAuthenticatedUser();
         $followed = $this->transformer->transformToObject($userRelationshipId);
-        $userRelationship = new UserRelationship($loggedInUser, $followed);
+
+        //try to make an user relationship value object, catches the errors and returns a failure response when failed.
+        $userRelationshipOrResponse = $this->getUserRelationshipOrErrorResponse($loggedInUser, $followed);
+        if ($userRelationshipOrResponse instanceof Response) {
+            return $userRelationshipOrResponse;
+        }
+
+        //rename this so it makes sense again....
+        $userRelationship = $userRelationshipOrResponse;
 
         $relationship = $this->repository->findRelationship($userRelationship);
         if ($relationship === null) {
-           return $this->onFailure('the relationship does not exist');
+            return $this->onFailure('the relationship does not exist');
         }
 
-        $this->deleter->deleteRelationship($loggedInUser, $relationship);
+        try {
+            $this->deleter->deleteRelationship($loggedInUser, $relationship);
+        } catch (AccessDeniedException $e) {
+            return $this->onFailure('Not enough rights to delete this relationship');
+        }
 
         return $this->onSuccess();
     }
@@ -100,5 +117,28 @@ class DeleteFriendsController
     public function onFailure($failureReason)
     {
         return new Response($failureReason);
+    }
+
+    /**
+     * Tries to create a user relationship object catches the exceptions when failed and returns an onFailure response.
+     *
+     * @param UserRelationshipInterface $loggedInUser The logged in user
+     * @param UserRelationshipInterface $followed     The followed user
+     *
+     * @return Response|UserRelationship
+     */
+    protected function getUserRelationshipOrErrorResponse(UserRelationshipInterface $loggedInUser, UserRelationshipInterface $followed)
+    {
+        try {
+            $userRelationship = new UserRelationship($loggedInUser, $followed);
+        } catch (FriendException $e) {
+            if ($e instanceof IdenticalFollowerFollowedException) {
+                return $this->onFailure('You can not add or delete yourself');
+            } else {
+                return $this->onFailure('unknown exception');
+            }
+        }
+
+        return $userRelationship;
     }
 }
