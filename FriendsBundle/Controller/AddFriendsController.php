@@ -19,7 +19,7 @@ use Miliooo\Friends\Exceptions\IdenticalFollowerFollowedException;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class AddFriendsController
+ * This controller is responsible for adding friends.
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */

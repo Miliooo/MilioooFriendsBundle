@@ -55,9 +55,9 @@ class RelationshipDeleterSecureAware implements RelationshipDeleterSecureInterfa
      */
     public function deleteRelationship(UserRelationshipInterface $user, RelationshipInterface $relationship)
     {
-       if ($this->canDeleteSpecification->isSatisfiedBy($user, $relationship) === false) {
-           throw new AccessDeniedException('Not enough rights to delete this relationship');
-       }
+        if ($this->canDeleteSpecification->isSatisfiedBy($user, $relationship) === false) {
+            throw new AccessDeniedException('Not enough rights to delete this relationship');
+        }
 
         $this->relationshipDeleter->deleteRelationship($relationship);
 
