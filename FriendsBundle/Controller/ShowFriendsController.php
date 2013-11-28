@@ -48,13 +48,13 @@ class ShowFriendsController
     /**
      * Gets the followers for the given user.
      *
-     * @param mixed $userId
+     * @param mixed $userRelationshipId
      *
      * @return JsonResponse
      */
-    public function getFollowersAction($userId)
+    public function getFollowersAction($userRelationshipId)
     {
-        $user = $this->transformer->transformToObject($userId);
+        $user = $this->transformer->transformToObject($userRelationshipId);
         $followers = $this->userRelationshipsProvider->getFollowers($user);
 
         return new JsonResponse(['data' => $followers]);
