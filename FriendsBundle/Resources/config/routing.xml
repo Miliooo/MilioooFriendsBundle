@@ -8,4 +8,8 @@
         <default key="_controller">miliooo_friends.controller.add_friends_controller:AddFriendsAction</default>
     </route>
 
+    <route id="miliooo_friends_delete" pattern="/delete/{userRelationshipId}">
+        <default key="_controller">miliooo_friends.controller.delete_friends_controller:DeleteRelationship</default>
+    </route>
+
 </routes>
