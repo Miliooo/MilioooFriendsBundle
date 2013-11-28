@@ -64,14 +64,14 @@ class DeleteFriendsController
     /**
      * Deletes a relationship for the logged in user.
      *
-     * @param mixed $followedRelationShipId
+     * @param mixed $userRelationshipId
      *
      * @return response
      */
-    public function deleteRelationship($followedRelationShipId)
+    public function deleteRelationship($userRelationshipId)
     {
         $loggedInUser = $this->loggedInUserProvider->getAuthenticatedUser();
-        $followed = $this->transformer->transformToObject($followedRelationShipId);
+        $followed = $this->transformer->transformToObject($userRelationshipId);
         $userRelationship = new UserRelationship($loggedInUser, $followed);
 
         $relationship = $this->repository->findRelationship($userRelationship);
