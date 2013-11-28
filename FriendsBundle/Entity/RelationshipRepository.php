@@ -43,7 +43,7 @@ class RelationshipRepository extends EntityRepository implements RelationshipRep
         $em = $this->getEntityManager();
         $em->persist($relationship);
 
-        if($flush) {
+        if ($flush) {
             $em->flush();
         }
     }
@@ -51,9 +51,13 @@ class RelationshipRepository extends EntityRepository implements RelationshipRep
     /**
      * {@inheritdoc}
      */
-    public function deleteRelationship(RelationshipInterface $relationship)
+    public function deleteRelationship(RelationshipInterface $relationship, $flush = true)
     {
         $em = $this->getEntityManager();
         $em->remove($relationship);
+
+        if ($flush) {
+            $em->flush();
+        }
     }
 }

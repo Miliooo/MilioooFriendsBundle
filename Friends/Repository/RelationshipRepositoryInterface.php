@@ -41,6 +41,7 @@ interface RelationshipRepositoryInterface
      * Deletes a relationship
      *
      * @param RelationshipInterface $relationship The relationship we want to delete
+     * @param boolean               $flush        Whether to flush or not defaults to true
      */
-    public function deleteRelationship(RelationshipInterface $relationship);
+    public function deleteRelationship(RelationshipInterface $relationship, $flush = true);
 }
