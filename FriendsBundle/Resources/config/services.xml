@@ -28,6 +28,11 @@
             <argument type="service" id="security.context"/>
         </service>
 
+        <service id="miliooo_friends.user_relationships_provider.default"
+                 class="Miliooo\Friends\Provider\UserRelationshipsProvider">
+            <argument type="service" id="miliooo_friends.repository.relationship"/>
+        </service>
+
     </services>
 
 </container>
