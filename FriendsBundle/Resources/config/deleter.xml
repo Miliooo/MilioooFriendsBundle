@@ -10,6 +10,11 @@
             <argument type="service" id="miliooo_friends.repository.relationship" />
         </service>
 
+        <service id="miliooo_friends.deleter.relationship_deleter_secure_aware.default" class="Miliooo\Friends\Deleter\RelationshipDeleterSecureAware">
+            <argument type="service" id="miliooo_friends.deleter.relationship_deleter" />
+            <argument type="service" id="miliooo_friends.specifications.can_delete_relationship" />
+        </service>
+
     </services>
 
 </container>
