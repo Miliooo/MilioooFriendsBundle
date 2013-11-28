@@ -75,7 +75,7 @@ class DeleteFriendsController
         $userRelationship = new UserRelationship($loggedInUser, $followed);
 
         $relationship = $this->repository->findRelationship($userRelationship);
-        if ($relationship === false) {
+        if ($relationship === null) {
            return $this->onFailure('the relationship does not exist');
         }
 
