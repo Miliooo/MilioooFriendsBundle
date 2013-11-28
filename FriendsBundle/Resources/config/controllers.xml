@@ -20,6 +20,12 @@
             <argument type="service" id="miliooo_friends.deleter.relationship_deleter_secure_aware" />
         </service>
 
+        <service id="miliooo_friends.controller.show_friends_controller"
+                 class="Miliooo\FriendsBundle\Controller\ShowFriendsController">
+            <argument type="service" id="miliooo_friends.user_relationship_transformer"/>
+            <argument type="service" id="miliooo_friends.user_relationships_provider"/>
+        </service>
+
     </services>
 
 </container>
