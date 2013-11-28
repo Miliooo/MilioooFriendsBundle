@@ -35,7 +35,13 @@ class Configuration implements ConfigurationInterface
             ->scalarNode('relationship_creator')->defaultValue('miliooo_friends.relationship_creator.default')->cannotBeEmpty()->end()
             ->scalarNode('relationship_creator_event_aware')->defaultValue('miliooo_friends.relationship_creator_event_aware.default')->cannotBeEmpty()->end()
             ->scalarNode('user_relationship_provider')->defaultValue('miliooo_friends.user_relationship_provider.default')->cannotBeEmpty()->end()
-            ;
+            ->arrayNode('deleter')
+                ->addDefaultsIfNotSet()
+                ->children()
+                    ->scalarNode('relationship_deleter')->defaultValue('miliooo_friends.deleter.relationship_deleter.default')->cannotBeEmpty()->end()
+                ->end()
+            ->end()
+        ;
 
         return $treeBuilder;
     }

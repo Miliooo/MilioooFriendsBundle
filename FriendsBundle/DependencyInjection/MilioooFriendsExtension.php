@@ -33,11 +33,13 @@ class MilioooFriendsExtension extends Extension
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.xml');
         $loader->load('controllers.xml');
+        $loader->load('deleter.xml');
 
         $container->setParameter('miliooo_friends.relationship_class', $config['relationship_class']);
         $container->setAlias('miliooo_friends.relationship_creator', $config['relationship_creator']);
         $container->setAlias('miliooo_friends.user_relationship_provider', $config['user_relationship_provider']);
         $container->setAlias('miliooo_friends.user_relationship_transformer', $config['user_relationship_transformer']);
         $container->setAlias('miliooo_friends.relationship_creator_event_aware', $config['relationship_creator_event_aware']);
+        $container->setAlias('miliooo_friends.deleter.relationship_deleter',$config['deleter']['relationship_deleter']);
     }
 }
