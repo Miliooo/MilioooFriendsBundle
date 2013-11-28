@@ -41,6 +41,12 @@ class Configuration implements ConfigurationInterface
                     ->scalarNode('relationship_deleter')->defaultValue('miliooo_friends.deleter.relationship_deleter.default')->cannotBeEmpty()->end()
                 ->end()
             ->end()
+            ->arrayNode('specifications')
+            ->addDefaultsIfNotSet()
+            ->children()
+            ->scalarNode('can_delete_relationship')->defaultValue('miliooo_friends.specifications.can_delete_relationship.default')->cannotBeEmpty()->end()
+            ->end()
+            ->end()
         ;
 
         return $treeBuilder;

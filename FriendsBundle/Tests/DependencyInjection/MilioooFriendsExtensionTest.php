@@ -55,6 +55,8 @@ class MilioooFriendsExtensionTest extends \PHPUnit_Framework_TestCase
         $this->assertHasDefinition('miliooo_friends.relationship_creator_event_aware.default');
         $this->assertHasDefinition('miliooo_friends.deleter.relationship_deleter.default');
         $this->assertHasDefinition('miliooo_friends.deleter.relationship_deleter');
+        $this->assertHasDefinition('miliooo_friends.specifications.can_delete_relationship.default');
+        $this->assertHasDefinition('miliooo_friends.specifications.can_delete_relationship');
     }
 
 
