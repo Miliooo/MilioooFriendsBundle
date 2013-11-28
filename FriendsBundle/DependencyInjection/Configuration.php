@@ -34,7 +34,7 @@ class Configuration implements ConfigurationInterface
             ->scalarNode('user_relationship_transformer')->isRequired()->cannotBeEmpty()->end()
             ->scalarNode('relationship_creator')->defaultValue('miliooo_friends.relationship_creator.default')->cannotBeEmpty()->end()
             ->scalarNode('relationship_creator_event_aware')->defaultValue('miliooo_friends.relationship_creator_event_aware.default')->cannotBeEmpty()->end()
-            ->scalarNode('user_relationship_provider')->defaultValue('miliooo_friends.user_relationship_provider.default')->cannotBeEmpty()->end()
+            ->scalarNode('logged_in_user_provider')->defaultValue('miliooo_friends.logged_in_user_provider.default')->cannotBeEmpty()->end()
             ->arrayNode('deleter')
                 ->addDefaultsIfNotSet()
                 ->children()

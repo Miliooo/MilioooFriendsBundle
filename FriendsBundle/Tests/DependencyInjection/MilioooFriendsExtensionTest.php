@@ -47,8 +47,8 @@ class MilioooFriendsExtensionTest extends \PHPUnit_Framework_TestCase
         $this->assertHasDefinition('miliooo_friends.repository.relationship');
         $this->assertHasDefinition('miliooo_friends.relationship_creator');
         $this->assertHasDefinition('miliooo_friends.relationship_creator.default');
-        $this->assertHasDefinition('miliooo_friends.user_relationship_provider');
-        $this->assertHasDefinition('miliooo_friends.user_relationship_provider.default');
+        $this->assertHasDefinition('miliooo_friends.logged_in_user_provider');
+        $this->assertHasDefinition('miliooo_friends.logged_in_user_provider.default');
         $this->assertHasDefinition('miliooo_friends.controller.add_friends_controller');
         $this->assertHasDefinition('miliooo_friends.user_relationship_transformer');
         $this->assertHasDefinition('miliooo_friends.relationship_creator_event_aware');

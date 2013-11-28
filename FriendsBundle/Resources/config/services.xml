@@ -24,7 +24,7 @@
             <argument type="service" id="event_dispatcher"/>
         </service>
 
-        <service id="miliooo_friends.user_relationship_provider.default" class="Miliooo\Friends\User\LoggedInUserProviderSecurityContext">
+        <service id="miliooo_friends.logged_in_user_provider.default" class="Miliooo\Friends\User\LoggedInUserProviderSecurityContext">
             <argument type="service" id="security.context"/>
         </service>
 
