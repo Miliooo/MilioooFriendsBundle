@@ -59,4 +59,14 @@ class ShowFriendsController
 
         return new JsonResponse(['data' => $followers]);
     }
+
+    public function getFriendsDataAction($userRelationshipId)
+    {
+        $user = $this->transformer->transformToObject($userRelationshipId);
+        $data['followers'] = $this->userRelationshipsProvider->getFollowers($user);
+        $data['friends'] = $this->userRelationshipsProvider->getFriends($user);
+        $data['following'] = $this->userRelationshipsProvider->getFollowing($user);
+
+        return new JsonResponse(['friends' => $data]);
+    }
 }
