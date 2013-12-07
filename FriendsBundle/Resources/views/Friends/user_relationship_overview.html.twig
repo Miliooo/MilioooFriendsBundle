@@ -2,7 +2,7 @@
 
 {% block miliooo_friends_content %}
 
-    <ul id="friendsTab" class=" nav nav-tabs">
+    <ul id="friendsTab" class="nav nav-tabs">
         <li class="active"><a href="#friends" data-toggle="tab">{% trans from 'MilioooFriendsBundle' %}navigate.friends{% endtrans %}</a></li>
         <li><a href="#following" data-toggle="tab">{% trans from 'MilioooFriendsBundle' %}navigate.following{% endtrans %}</a></li>
         <li><a href="#followers" data-toggle="tab">{% trans from 'MilioooFriendsBundle' %}navigate.followers{% endtrans %}</a></li>
@@ -35,7 +35,7 @@
     </div>
 
     <script>
-        $('#friendsTabb').on('click', 'a', function (e) {
+        $('#friendsTab').on('click', 'a', function (e) {
             e.preventDefault();
             $(this).tab('show');
         });
