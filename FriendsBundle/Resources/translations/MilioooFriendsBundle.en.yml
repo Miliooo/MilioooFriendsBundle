@@ -1,0 +1,8 @@
+title:
+  friends:  Overview friends
+
+#navigate options
+navigate:
+  friends:   Friends
+  following: People you follow
+  followers: People who follow you

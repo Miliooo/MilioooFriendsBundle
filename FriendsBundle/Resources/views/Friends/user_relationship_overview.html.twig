@@ -1,35 +1,44 @@
-<ul id="friendsTab" class=" nav nav-tabs">
-    <li class="active"><a href="#following" data-toggle="tab">Following</a></li>
-    <li><a href="#followers" data-toggle="tab">Followers</a></li>
-    <li><a href="#friends" data-toggle="tab">Friends</a></li>
-</ul>
-<div id="friendsTabContent" class="tab-content">
-    <div class="tab-pane fade in active" id="following">
-        <ul>
-        {% for data.friends.following as user %}
-            <li> {{ user.getUserRelationshipId }} </li>
-        {% endfor %}
-        </ul>
-    </div>
-    <div class="tab-pane fade" id="followers">
-        <ul>
-        {% for data.friends.followers as user %}
-            <li> {{ user.getUserRelationshipId }} </li>
-        {% endfor %}
-        </ul>
+{% extends 'MilioooFriendsBundle::layout.html.twig' %}
 
+{% block miliooo_friends_content %}
+
+    <ul id="friendsTab" class=" nav nav-tabs">
+        <li class="active"><a href="#friends" data-toggle="tab">navigate.friends</a></li>
+        <li><a href="#following" data-toggle="tab">navigate.following</a></li>
+        <li><a href="#followers" data-toggle="tab">navigate.followers</a></li>
+
+    </ul>
+    <div id="friendsTabContent" class="tab-content">
+        <div class="tab-pane active fade in" id="friends">
+            <ul>
+                {% for user in friends.friends %}
+                    <li> {{ user.getUserRelationshipId }} </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="tab-pane fade" id="following">
+            <ul>
+                {% for user in friends.following %}
+                    <li> {{ user.getUserRelationshipId }} </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="tab-pane fade" id="followers">
+            <ul>
+                {% for user in friends.followers %}
+                    <li> {{ user.getUserRelationshipId }} </li>
+                {% endfor %}
+            </ul>
+
+        </div>
     </div>
-    <div class="tab-pane fade" id="friends">
-        <ul>
-        {% for data.friends.followers as user %}
-            <li> {{ user.getUserRelationshipId }} </li>
-        {% endfor %}
-        </ul>
-    </div>
-</div>
-<script>
-    $('#friendsTabb a').click(function (e) {
-        e.preventDefault()
-        $(this).tab('show')
-    });
-</script>
+
+    <script>
+        $('#friendsTabb').on('click', 'a', function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+        });
+    </script>
+
+{% endblock %}
