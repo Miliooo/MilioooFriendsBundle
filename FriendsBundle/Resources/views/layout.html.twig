@@ -7,12 +7,12 @@
 </head>
 
 <body>
-<div class="container">
-    <h1>{% trans from 'MilioooFriendsBundle' %}title.friends%{% endtrans %}</h1>
+    <div class="container">
+        <h1>{% trans from 'MilioooFriendsBundle' %}title.friends{% endtrans %}</h1>
+        {% block miliooo_friends_content %}{% endblock %}
+    </div>
 
-    {% block miliooo_friends_content %}{% endblock %}
-</div>
-<script src="https://code.jquery.com/jquery.js"></script>
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 </body>
 </html>

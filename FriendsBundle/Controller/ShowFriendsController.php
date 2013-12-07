@@ -11,6 +11,7 @@
 namespace Miliooo\FriendsBundle\Controller;
 
 use Miliooo\Friends\Provider\UserRelationshipsProviderInterface;
+use Miliooo\Friends\User\UserRelationshipInterface;
 use Miliooo\Friends\User\UserRelationshipTransformerInterface;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 
@@ -22,14 +23,25 @@ use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 class ShowFriendsController
 {
     /**
+     * An user relationship transformer instance.
+     *
      * @var UserRelationshipTransformerInterface
      */
     private $transformer;
 
     /**
+     * An user relationship provider instance.
+     *
      * @varUserRelationshipsProviderInterface
      */
     private $userRelationshipsProvider;
+
+    /**
+     * A templating instance.
+     *
+     * @var \Symfony\Bundle\FrameworkBundle\Templating\EngineInterface
+     */
+    private $templating;
 
     /**
      * Constructor.
@@ -56,11 +68,23 @@ class ShowFriendsController
      */
     public function getFriendsDataAction($userRelationshipId)
     {
-        $user = $this->transformer->transformToObject($userRelationshipId);
+        $user = $this->getUser($userRelationshipId);
+
         $data['followers'] = $this->userRelationshipsProvider->getFollowers($user);
         $data['friends'] = $this->userRelationshipsProvider->getFriends($user);
         $data['following'] = $this->userRelationshipsProvider->getFollowing($user);
 
         return $this->templating->renderResponse('MilioooFriendsBundle:Friends:user_relationship_overview.html.twig', ['friends' => $data]);
+    }
+
+    /**
+     * Gets the user.
+     *
+     * @param string $userRelationshipId
+     * @return UserRelationshipInterface
+     */
+    protected function getUser($userRelationshipId)
+    {
+        return $this->transformer->transformToObject($userRelationshipId);
     }
 }
