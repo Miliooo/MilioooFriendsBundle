@@ -45,7 +45,7 @@ class UserRelationshipsProvider implements UserRelationshipsProviderInterface
 
         $following = [];
         foreach ($relationships as $relationship) {
-            $following[] = $relationship->getFollowed()->getUserRelationshipId();
+            $following[] = $relationship->getFollowed();
         }
 
         return $following;
@@ -59,7 +59,7 @@ class UserRelationshipsProvider implements UserRelationshipsProviderInterface
         $followers = [];
         $relationships = $this->repository->getFollowers($user);
         foreach ($relationships as $relationship) {
-            $followers[] = $relationship->getFollower()->getUserRelationshipId();
+            $followers[] = $relationship->getFollower();
         }
 
         return $followers;

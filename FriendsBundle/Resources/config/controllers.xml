@@ -24,6 +24,7 @@
                  class="Miliooo\FriendsBundle\Controller\ShowFriendsController">
             <argument type="service" id="miliooo_friends.user_relationship_transformer"/>
             <argument type="service" id="miliooo_friends.user_relationships_provider"/>
+            <argument type="service" id="templating"/>
         </service>
 
     </services>

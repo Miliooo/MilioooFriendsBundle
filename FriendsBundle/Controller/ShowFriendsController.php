@@ -12,7 +12,7 @@ namespace Miliooo\FriendsBundle\Controller;
 
 use Miliooo\Friends\Provider\UserRelationshipsProviderInterface;
 use Miliooo\Friends\User\UserRelationshipTransformerInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 
 /**
  * Class ShowFriendsController
@@ -36,30 +36,24 @@ class ShowFriendsController
      *
      * @param UserRelationshipTransformerInterface $transformer
      * @param UserRelationshipsProviderInterface   $userRelationshipsProvider
+     * @param EngineInterface                      $templating
      */
     public function __construct(
         UserRelationshipTransformerInterface $transformer,
-        UserRelationshipsProviderInterface $userRelationshipsProvider
+        UserRelationshipsProviderInterface $userRelationshipsProvider,
+        EngineInterface $templating
     ) {
         $this->transformer = $transformer;
         $this->userRelationshipsProvider = $userRelationshipsProvider;
+        $this->templating = $templating;
     }
 
     /**
-     * Gets the followers for the given user.
+     * Shows an overview for the relationships for a given user.
      *
-     * @param mixed $userRelationshipId
-     *
-     * @return JsonResponse
+     * @param $userRelationshipId
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function getFollowersAction($userRelationshipId)
-    {
-        $user = $this->transformer->transformToObject($userRelationshipId);
-        $followers = $this->userRelationshipsProvider->getFollowers($user);
-
-        return new JsonResponse(['data' => $followers]);
-    }
-
     public function getFriendsDataAction($userRelationshipId)
     {
         $user = $this->transformer->transformToObject($userRelationshipId);
@@ -67,6 +61,6 @@ class ShowFriendsController
         $data['friends'] = $this->userRelationshipsProvider->getFriends($user);
         $data['following'] = $this->userRelationshipsProvider->getFollowing($user);
 
-        return new JsonResponse(['friends' => $data]);
+        return $this->templating->renderResponse('MilioooFriendsBundle:Friends:user_relationship_overview.html.twig', ['friends' => $data]);
     }
 }

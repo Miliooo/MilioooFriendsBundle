@@ -1,0 +1,35 @@
+<ul id="friendsTab" class=" nav nav-tabs">
+    <li class="active"><a href="#following" data-toggle="tab">Following</a></li>
+    <li><a href="#followers" data-toggle="tab">Followers</a></li>
+    <li><a href="#friends" data-toggle="tab">Friends</a></li>
+</ul>
+<div id="friendsTabContent" class="tab-content">
+    <div class="tab-pane fade in active" id="following">
+        <ul>
+        {% for data.friends.following as user %}
+            <li> {{ user.getUserRelationshipId }} </li>
+        {% endfor %}
+        </ul>
+    </div>
+    <div class="tab-pane fade" id="followers">
+        <ul>
+        {% for data.friends.followers as user %}
+            <li> {{ user.getUserRelationshipId }} </li>
+        {% endfor %}
+        </ul>
+
+    </div>
+    <div class="tab-pane fade" id="friends">
+        <ul>
+        {% for data.friends.followers as user %}
+            <li> {{ user.getUserRelationshipId }} </li>
+        {% endfor %}
+        </ul>
+    </div>
+</div>
+<script>
+    $('#friendsTabb a').click(function (e) {
+        e.preventDefault()
+        $(this).tab('show')
+    });
+</script>
