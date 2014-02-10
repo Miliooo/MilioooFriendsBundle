@@ -72,8 +72,35 @@ class UserRelationshipsProvider implements UserRelationshipsProviderInterface
     {
         $following = $this->getFollowing($user);
         $followers = $this->getFollowers($user);
+
+        return $this->getFriendsFromFollowingAndFollowers($following, $followers);
+
+    }
+
+    /**
+     * Gets the friends from intersecting the following and followers
+     *
+     * @param UserRelationshipInterface[] $following
+     * @param UserRelationshipInterface[] $followers
+     *
+     * @return UserRelationshipInterface[]
+     */
+    protected function getFriendsFromFollowingAndFollowers($following, $followers)
+    {
         $friends = array_intersect($following, $followers);
 
         return array_values($friends);
+    }
+
+    /**
+     *
+     */
+    public function getAllRelationships(UserRelationshipInterface $user)
+    {
+        $data['followers'] = $this->getFollowers($user);
+        $data['following'] = $this->getFollowing($user);
+        $data['friends'] = $this->getFriendsFromFollowingAndFollowers($data['following'], $data['followers']);
+
+        return $data;
     }
 }

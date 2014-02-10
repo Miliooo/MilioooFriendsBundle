@@ -38,9 +38,20 @@ interface UserRelationshipsProviderInterface
     public function getFollowers(UserRelationshipInterface $user);
 
     /**
+     * Gets the friends for the given person.
+     *
      * @param UserRelationshipInterface $user
      *
      * @return UserRelationshipInterface[] An array with users who follows the person and who the person also follows
      */
     public function getFriends(UserRelationshipInterface $user);
+
+    /**
+     * Gets an array with all the different relationships
+     *
+     * @param UserRelationshipInterface $user
+     *
+     * @return array for example $data['friends'] = UserRelationshipInterface[], also $data['followers] and data['following']
+     */
+    public function getAllRelationships(UserRelationshipInterface $user);
 }

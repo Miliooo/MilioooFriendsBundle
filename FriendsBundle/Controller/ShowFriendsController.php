@@ -64,15 +64,14 @@ class ShowFriendsController
      * Shows an overview for the relationships for a given user.
      *
      * @param $userRelationshipId
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function getFriendsDataAction($userRelationshipId)
     {
         $user = $this->getUser($userRelationshipId);
 
-        $data['followers'] = $this->userRelationshipsProvider->getFollowers($user);
-        $data['friends'] = $this->userRelationshipsProvider->getFriends($user);
-        $data['following'] = $this->userRelationshipsProvider->getFollowing($user);
+        $data = $this->userRelationshipsProvider->getAllRelationships($user);
 
         return $this->templating->renderResponse('MilioooFriendsBundle:Friends:user_relationship_overview.html.twig', ['friends' => $data]);
     }
@@ -81,6 +80,7 @@ class ShowFriendsController
      * Gets the user.
      *
      * @param string $userRelationshipId
+     *
      * @return UserRelationshipInterface
      */
     protected function getUser($userRelationshipId)
