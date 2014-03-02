@@ -2,4 +2,4 @@
 MilioooFriendsBundle
 ====================
 
-Add follower and friends
+Add follower and friends (this i*s a work in progress!)

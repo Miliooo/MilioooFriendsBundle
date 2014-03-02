@@ -33,6 +33,12 @@
             <argument type="service" id="miliooo_friends.repository.relationship"/>
         </service>
 
+        <service id="miliooo_friends.twig_extension.default" class="Miliooo\FriendsBundle\Twig\Extension\FriendsExtension">
+            <argument type="service" id="miliooo_friends.logged_in_user_provider" />
+            <argument type="service" id="miliooo_friends.user_relationships_provider" />
+            <tag name="twig.extension" alias="miliooo_friends" />
+        </service>
+
     </services>
 
 </container>

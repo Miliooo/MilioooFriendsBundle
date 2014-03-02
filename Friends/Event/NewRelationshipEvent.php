@@ -41,5 +41,4 @@ class NewRelationshipEvent extends Event
     {
         return $this->relationship;
     }
-
 }

@@ -6,3 +6,7 @@ navigate:
   friends:   Vrienden
   following: Leden die je volgt
   followers: Leden die je volgen
+
+action:
+  unfollow: Niet langer volgen
+  follow: Volgen

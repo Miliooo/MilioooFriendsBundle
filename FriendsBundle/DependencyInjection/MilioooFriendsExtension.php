@@ -44,6 +44,7 @@ class MilioooFriendsExtension extends Extension
         $this->setDeleterAliases($container, $config);
         $container->setAlias('miliooo_friends.specifications.can_delete_relationship', $config['specifications']['can_delete_relationship']);
         $container->setAlias('miliooo_friends.user_relationships_provider', $config['user_relationships_provider']);
+        $container->setAlias('miliooo_friends.twig_extension', $config['twig_extension']);
     }
 
     /**

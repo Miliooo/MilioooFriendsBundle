@@ -36,6 +36,7 @@ class Configuration implements ConfigurationInterface
             ->scalarNode('relationship_creator_event_aware')->defaultValue('miliooo_friends.relationship_creator_event_aware.default')->cannotBeEmpty()->end()
             ->scalarNode('logged_in_user_provider')->defaultValue('miliooo_friends.logged_in_user_provider.default')->cannotBeEmpty()->end()
             ->scalarNode('user_relationships_provider')->defaultValue('miliooo_friends.user_relationships_provider.default')->cannotBeEmpty()->end()
+            ->scalarNode('twig_extension')->defaultValue('miliooo_friends.twig_extension.default')->cannotBeEmpty()->end()
             ->arrayNode('deleter')
                 ->addDefaultsIfNotSet()
                 ->children()

@@ -12,7 +12,13 @@
         <div class="tab-pane active fade in" id="friends">
             <ul>
                 {% for user in userRelationships.friends %}
-                    <li> {{ user.getUserRelationshipId }} </li>
+                    {% set formAction %}{{ url('miliooo_friends_delete', {'userRelationshipId': user.getUserRelationshipId}) }}{% endset %}
+                    {% set submitValue %}{% trans from 'MilioooFriendsBundle' %}action.unfollow{% endtrans %}{% endset %}
+                    <li> {{ user.getUserRelationshipId }}
+                    <form action="{{ formAction }}" method="post">
+                        <input type="submit" value="{{ submitValue }}"/>
+                    </form>
+                    </li>
                 {% endfor %}
             </ul>
         </div>
@@ -20,14 +26,32 @@
         <div class="tab-pane fade" id="following">
             <ul>
                 {% for user in userRelationships.following %}
-                    <li> {{ user.getUserRelationshipId }} </li>
+
+                    {% set formAction %}{{ url('miliooo_friends_delete', {'userRelationshipId': user.getUserRelationshipId}) }}{% endset %}
+                    {% set submitValue %}{% trans from 'MilioooFriendsBundle' %}action.unfollow{% endtrans %}{% endset %}
+                    <li> {{ user.getUserRelationshipId }}
+                    <form action="{{ formAction }}" method="post">
+                        <input type="submit" value="{{ submitValue }}"/>
+                    </form>
+                    </li>
                 {% endfor %}
             </ul>
         </div>
         <div class="tab-pane fade" id="followers">
             <ul>
                 {% for user in userRelationships.followers %}
-                    <li> {{ user.getUserRelationshipId }} </li>
+                    {% if(miliooo_friends_is_following(user)) %}
+                        {% set formAction %}{{ url('miliooo_friends_delete', {'userRelationshipId': user.getUserRelationshipId}) }}{% endset %}
+                        {% set submitValue %}{% trans from 'MilioooFriendsBundle' %}action.unfollow{% endtrans %}{% endset %}
+                    {% else %}
+                        {% set formAction %}{{ url('miliooo_friends_add', {'userRelationshipId': user.getUserRelationshipId}) }}{% endset %}
+                        {% set submitValue %}{% trans from 'MilioooFriendsBundle' %}action.follow{% endtrans %}{% endset %}
+                    {% endif %}
+                    <li> {{ user.getUserRelationshipId }}
+                    <form action="{{ formAction }}" method="post">
+                        <input type="submit" value="{{ submitValue }}"/>
+                    </form>
+                    </li>
                 {% endfor %}
             </ul>
 

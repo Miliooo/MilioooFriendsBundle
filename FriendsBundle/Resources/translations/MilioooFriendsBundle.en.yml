@@ -6,3 +6,7 @@ navigate:
   friends:   Friends
   following: People you follow
   followers: People who follow you
+
+action:
+  unfollow: Unfollow
+  follow: Follow
