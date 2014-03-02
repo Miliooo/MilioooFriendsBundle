@@ -38,6 +38,16 @@ class UserRelationshipsProvider implements UserRelationshipsProviderInterface
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function getUserRelationships(UserRelationshipInterface $user)
+    {
+        $data = $this->getAllRelationships($user);
+
+        return new UserRelationships($user, $data['friends'], $data['followers'], $data['following']);
+    }
+
+    /**
      * Gets an array with people following the given user.
      *
      * @param UserRelationshipInterface $user
@@ -103,15 +113,5 @@ class UserRelationshipsProvider implements UserRelationshipsProviderInterface
         $data['friends'] = $this->getFriendsFromFollowingAndFollowersArray($data['following'], $data['followers']);
 
         return $data;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getUserRelationships(UserRelationshipInterface $user)
-    {
-        $data = $this->getAllRelationships($user);
-
-        return new UserRelationships($user, $data['friends'], $data['followers'], $data['following']);
     }
 }
