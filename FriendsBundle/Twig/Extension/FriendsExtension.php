@@ -45,8 +45,7 @@ class FriendsExtension extends \Twig_Extension
     public function __construct(
         LoggedInUserProviderInterface $loggedInUserProvider,
         UserRelationshipsProviderInterface $userRelationshipProvider
-    )
-    {
+    ) {
         $this->loggedInUserProvider = $loggedInUserProvider;
         $this->userRelationshipProvider = $userRelationshipProvider;
     }
