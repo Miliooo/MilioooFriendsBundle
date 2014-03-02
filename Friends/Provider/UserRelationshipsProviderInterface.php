@@ -11,6 +11,7 @@
 namespace Miliooo\Friends\Provider;
 
 use Miliooo\Friends\User\UserRelationshipInterface;
+use Miliooo\Friends\Model\UserRelationships;
 
 /**
  * Provides the relationships for a single user
@@ -20,38 +21,11 @@ use Miliooo\Friends\User\UserRelationshipInterface;
 interface UserRelationshipsProviderInterface
 {
     /**
-     * Gets the users who the person is following.
+     * Gets the user relationships.
      *
-     * @param UserRelationshipInterface $user
+     * @param UserRelationshipInterface $user The user for whom we get the relationships.
      *
-     * @return UserRelationshipInterface[] An array with the users who the user is following.
+     * @return UserRelationships An user relationships object.
      */
-    public function getFollowing(UserRelationshipInterface $user);
-
-    /**
-     * Gets the users who follow the given person.
-     *
-     * @param UserRelationshipInterface $user
-     *
-     * @return UserRelationshipInterface[] An array with users who follow the given user.
-     */
-    public function getFollowers(UserRelationshipInterface $user);
-
-    /**
-     * Gets the friends for the given person.
-     *
-     * @param UserRelationshipInterface $user
-     *
-     * @return UserRelationshipInterface[] An array with users who follows the person and who the person also follows
-     */
-    public function getFriends(UserRelationshipInterface $user);
-
-    /**
-     * Gets an array with all the different relationships
-     *
-     * @param UserRelationshipInterface $user
-     *
-     * @return array for example $data['friends'] = UserRelationshipInterface[], also $data['followers] and data['following']
-     */
-    public function getAllRelationships(UserRelationshipInterface $user);
+    public function getUserRelationships(UserRelationshipInterface $user);
 }

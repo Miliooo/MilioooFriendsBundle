@@ -36,12 +36,24 @@ class UserRelationshipsProviderTest extends \PHPUnit_Framework_TestCase
      */
     private $user;
 
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
+    private $relationship;
+
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
+    private $follower;
+
     public function setUp()
     {
         $this->repository = $this->getMock('Miliooo\Friends\Repository\RelationshipRepositoryInterface');
         $this->provider = new UserRelationshipsProvider($this->repository);
 
         $this->user = $this->getMock('Miliooo\Friends\User\UserRelationshipInterface');
+        $this->relationship = $this->getMock('Miliooo\Friends\Model\RelationshipInterface');
+        $this->follower = $this->getMock('Miliooo\Friends\User\UserRelationshipInterface');
     }
 
     public function testInterface()
@@ -55,15 +67,18 @@ class UserRelationshipsProviderTest extends \PHPUnit_Framework_TestCase
             ->with($this->user)
             ->will($this->returnValue([]));
 
-        $this->provider->getFollowing($this->user);
-    }
-
-    public function testGetFollowers()
-    {
         $this->repository->expects($this->once())->method('getFollowers')
             ->with($this->user)
-            ->will($this->returnValue([]));
+            ->will($this->returnValue([$this->relationship]));
 
-        $this->provider->getFollowers($this->user);
+        $this->relationship->expects($this->once())->method('getFollower')
+            ->will($this->returnValue($this->follower));
+
+        $result = $this->provider->getUserRelationships($this->user);
+
+        $this->assertEquals($result->getFollowers(), [$this->follower]);
+        $this->assertEmpty($result->getFriends());
+        $this->assertEmpty($result->getFollowing());
+
     }
 }

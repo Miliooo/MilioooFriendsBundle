@@ -10,9 +10,10 @@
 
 namespace Miliooo\Friends\Provider;
 
+use Miliooo\Friends\Model\UserRelationships;
 use Miliooo\Friends\User\UserRelationshipInterface;
-
 use Miliooo\Friends\Repository\RelationshipRepositoryInterface;
+
 
 /**
  * Provides the relationships for a single user
@@ -37,9 +38,13 @@ class UserRelationshipsProvider implements UserRelationshipsProviderInterface
     }
 
     /**
-     * {@inheritdoc}
+     * Gets an array with people following the given user.
+     *
+     * @param UserRelationshipInterface $user
+     *
+     * @return array
      */
-    public function getFollowing(UserRelationshipInterface $user)
+    protected function getFollowingArray(UserRelationshipInterface $user)
     {
         $relationships = $this->repository->getFollowing($user);
 
@@ -52,9 +57,13 @@ class UserRelationshipsProvider implements UserRelationshipsProviderInterface
     }
 
     /**
-     * {@inheritdoc}
+     * Gets an array with followers from the given user.
+     *
+     * @param UserRelationshipInterface $user
+     *
+     * @return array
      */
-    public function getFollowers(UserRelationshipInterface $user)
+    protected function getFollowersArray(UserRelationshipInterface $user)
     {
         $followers = [];
         $relationships = $this->repository->getFollowers($user);
@@ -66,18 +75,6 @@ class UserRelationshipsProvider implements UserRelationshipsProviderInterface
     }
 
     /**
-     * {@inheritDoc}
-     */
-    public function getFriends(UserRelationshipInterface $user)
-    {
-        $following = $this->getFollowing($user);
-        $followers = $this->getFollowers($user);
-
-        return $this->getFriendsFromFollowingAndFollowers($following, $followers);
-
-    }
-
-    /**
      * Gets the friends from intersecting the following and followers
      *
      * @param UserRelationshipInterface[] $following
@@ -85,7 +82,7 @@ class UserRelationshipsProvider implements UserRelationshipsProviderInterface
      *
      * @return UserRelationshipInterface[]
      */
-    protected function getFriendsFromFollowingAndFollowers($following, $followers)
+    protected function getFriendsFromFollowingAndFollowersArray($following, $followers)
     {
         $friends = array_intersect($following, $followers);
 
@@ -93,14 +90,28 @@ class UserRelationshipsProvider implements UserRelationshipsProviderInterface
     }
 
     /**
+     * Gets an array with all the relationships from the given user.
      *
+     * @param UserRelationshipInterface $user
+     *
+     * @return array
      */
-    public function getAllRelationships(UserRelationshipInterface $user)
+    protected function getAllRelationships(UserRelationshipInterface $user)
     {
-        $data['followers'] = $this->getFollowers($user);
-        $data['following'] = $this->getFollowing($user);
-        $data['friends'] = $this->getFriendsFromFollowingAndFollowers($data['following'], $data['followers']);
+        $data['followers'] = $this->getFollowersArray($user);
+        $data['following'] = $this->getFollowingArray($user);
+        $data['friends'] = $this->getFriendsFromFollowingAndFollowersArray($data['following'], $data['followers']);
 
         return $data;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getUserRelationships(UserRelationshipInterface $user)
+    {
+        $data = $this->getAllRelationships($user);
+
+        return new UserRelationships($user, $data['friends'], $data['followers'], $data['following']);
     }
 }
