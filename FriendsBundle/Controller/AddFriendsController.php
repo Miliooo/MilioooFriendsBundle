@@ -10,13 +10,15 @@
 
 namespace Miliooo\FriendsBundle\Controller;
 
-use Miliooo\Friends\Creator\RelationshipCreatorInterface;
 use Miliooo\Friends\User\LoggedInUserProviderInterface;
 use Miliooo\Friends\User\UserRelationshipTransformerInterface;
 use Miliooo\Friends\ValueObjects\UserRelationship;
 use Miliooo\Friends\Exceptions\FriendException;
 use Miliooo\Friends\Exceptions\IdenticalFollowerFollowedException;
 use Symfony\Component\HttpFoundation\Response;
+use Miliooo\Friends\Command\Handler\CreateRelationshipCommandHandlerInterface;
+use Miliooo\Friends\Command\CreateRelationshipCommand;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * This controller is responsible for adding friends.
@@ -25,13 +27,6 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class AddFriendsController
 {
-    /**
-     * A relationship creator instance.
-     *
-     * @var RelationshipCreatorInterface
-     */
-    protected $relationshipCreator;
-
     /**
      * A logged in user provider instance.
      *
@@ -47,19 +42,17 @@ class AddFriendsController
     protected $transformer;
 
     /**
-     * Constructor.
-     *
-     * @param RelationshipCreatorInterface         $relationshipCreator
-     * @param LoggedInUserProviderInterface        $userProvider
-     * @param UserRelationshipTransformerInterface $transformer
+     * @param CreateRelationshipCommandHandlerInterface $handler
+     * @param LoggedInUserProviderInterface             $userProvider
+     * @param UserRelationshipTransformerInterface      $transformer
      */
     public function __construct(
-        RelationshipCreatorInterface $relationshipCreator,
+        CreateRelationshipCommandHandlerInterface $handler,
         LoggedInUserProviderInterface $userProvider,
         UserRelationshipTransformerInterface $transformer
     ) {
+        $this->handler = $handler;
         $this->userProvider = $userProvider;
-        $this->relationshipCreator = $relationshipCreator;
         $this->transformer = $transformer;
     }
 
@@ -75,16 +68,28 @@ class AddFriendsController
 
         try {
             $userRelationship = new UserRelationship($loggedInUser, $followed);
-        } catch(FriendException $e) {
+        } catch (FriendException $e) {
             if ($e instanceof IdenticalFollowerFollowedException) {
-                return new Response('identical friends');
+                $data['error'] = true;
             } else {
-                return new Response('unknown error');
+               $data['error'] = true;
             }
+            //since we don't have a valid user relationship object we need to return here.
+            return new JsonResponse($data);
         }
 
-        $this->relationshipCreator->createRelationship($userRelationship, new \DateTime('now'));
+        $command = new CreateRelationshipCommand();
+        $command->setDateCreated(new \DateTime('now'));
+        $command->setUserRelationship($userRelationship);
 
-        return new Response('success');
+        try {
+            $this->handler->handle($command);
+        } catch (\Exception $e) {
+            $data['error'] = true;
+        }
+
+        $data['success'] = true;
+
+        return new JsonResponse($data);
     }
 }

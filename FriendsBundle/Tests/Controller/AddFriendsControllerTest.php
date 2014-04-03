@@ -32,7 +32,7 @@ class AddFriendsControllerTest extends \PHPUnit_Framework_TestCase
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
-    private $relationshipCreator;
+    private $handler;
 
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
@@ -51,10 +51,10 @@ class AddFriendsControllerTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->loggedInUserProvider = $this->getMock('Miliooo\Friends\User\LoggedInUserProviderInterface');
-        $this->relationshipCreator = $this->getMock('Miliooo\Friends\Creator\RelationshipCreatorInterface');
+        $this->handler = $this->getMock('Miliooo\Friends\Command\Handler\CreateRelationshipCommandHandlerInterface');
         $this->transformer = $this->getMock('Miliooo\Friends\User\UserRelationshipTransformerInterface');
         $this->controller = new AddFriendsController(
-            $this->relationshipCreator,
+            $this->handler,
             $this->loggedInUserProvider,
             $this->transformer
         );
@@ -86,8 +86,6 @@ class AddFriendsControllerTest extends \PHPUnit_Framework_TestCase
 
     protected function expectsRelationshipCreated()
     {
-        $valueObject = new UserRelationship($this->loggedInUser, $this->followed);
-        $this->relationshipCreator->expects($this->once())->method('createRelationship')
-            ->with($valueObject, new \DateTime('now'));
+        $this->handler->expects($this->once())->method('handle');
     }
 }

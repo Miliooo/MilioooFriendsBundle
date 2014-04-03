@@ -31,6 +31,7 @@ class MilioooFriendsExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader->load('command.xml');
         $loader->load('controllers.xml');
         $loader->load('deleter.xml');
         $loader->load('services.xml');
@@ -45,6 +46,8 @@ class MilioooFriendsExtension extends Extension
         $container->setAlias('miliooo_friends.specifications.can_delete_relationship', $config['specifications']['can_delete_relationship']);
         $container->setAlias('miliooo_friends.user_relationships_provider', $config['user_relationships_provider']);
         $container->setAlias('miliooo_friends.twig_extension', $config['twig_extension']);
+
+        $container->setAlias('miliooo_friends.handler.create_relationship', $config['handler']['create_relationship']);
     }
 
     /**

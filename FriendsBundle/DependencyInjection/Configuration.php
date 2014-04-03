@@ -44,6 +44,13 @@ class Configuration implements ConfigurationInterface
                     ->scalarNode('relationship_deleter_secure_aware')->defaultValue('miliooo_friends.deleter.relationship_deleter_secure_aware.default')->cannotBeEmpty()->end()
                 ->end()
             ->end()
+            ->arrayNode('handler')
+                ->addDefaultsIfNotSet()
+                ->children()
+                ->scalarNode('create_relationship')->defaultValue('miliooo_friends.handler.create_relationship.default')->cannotBeEmpty()->end()
+                ->end()
+            ->end()
+
             ->arrayNode('specifications')
             ->addDefaultsIfNotSet()
             ->children()
