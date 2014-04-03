@@ -7,7 +7,7 @@
     <services>
 
         <service id="miliooo_friends.handler.create_relationship.default"
-                 class="Miliooo\FriendsBundle\Controller\AddFriendsController">
+                 class="Miliooo\Friends\Command\Handler\CreateRelationshipCommandHandler">
             <argument type="service" id="miliooo_friends.relationship_creator"/>
         </service>
 

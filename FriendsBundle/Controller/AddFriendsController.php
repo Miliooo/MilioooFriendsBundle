@@ -42,6 +42,11 @@ class AddFriendsController
     protected $transformer;
 
     /**
+     * @var CreateRelationshipCommandHandlerInterface
+     */
+    protected $handler;
+
+    /**
      * @param CreateRelationshipCommandHandlerInterface $handler
      * @param LoggedInUserProviderInterface             $userProvider
      * @param UserRelationshipTransformerInterface      $transformer
