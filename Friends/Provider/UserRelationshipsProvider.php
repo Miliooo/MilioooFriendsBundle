@@ -54,7 +54,7 @@ class UserRelationshipsProvider implements UserRelationshipsProviderInterface
      *
      * @return array
      */
-    protected function getFollowingArray(UserRelationshipInterface $user)
+    private function getFollowingArray(UserRelationshipInterface $user)
     {
         $relationships = $this->repository->getFollowing($user);
 
@@ -73,7 +73,7 @@ class UserRelationshipsProvider implements UserRelationshipsProviderInterface
      *
      * @return array
      */
-    protected function getFollowersArray(UserRelationshipInterface $user)
+    private function getFollowersArray(UserRelationshipInterface $user)
     {
         $followers = [];
         $relationships = $this->repository->getFollowers($user);
@@ -92,7 +92,7 @@ class UserRelationshipsProvider implements UserRelationshipsProviderInterface
      *
      * @return UserRelationshipInterface[]
      */
-    protected function getFriendsFromFollowingAndFollowersArray($following, $followers)
+    private function getFriendsFromFollowingAndFollowersArray($following, $followers)
     {
         $friends = array_intersect($following, $followers);
 
@@ -106,7 +106,7 @@ class UserRelationshipsProvider implements UserRelationshipsProviderInterface
      *
      * @return array
      */
-    protected function getAllRelationships(UserRelationshipInterface $user)
+    private function getAllRelationships(UserRelationshipInterface $user)
     {
         $data['followers'] = $this->getFollowersArray($user);
         $data['following'] = $this->getFollowingArray($user);
