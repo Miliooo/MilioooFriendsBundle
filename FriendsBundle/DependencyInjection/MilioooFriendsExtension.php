@@ -41,7 +41,6 @@ class MilioooFriendsExtension extends Extension
         $container->setAlias('miliooo_friends.relationship_creator', $config['relationship_creator']);
         $container->setAlias('miliooo_friends.logged_in_user_provider', $config['logged_in_user_provider']);
         $container->setAlias('miliooo_friends.user_relationship_transformer', $config['user_relationship_transformer']);
-        $container->setAlias('miliooo_friends.relationship_creator_event_aware', $config['relationship_creator_event_aware']);
         $this->setDeleterAliases($container, $config);
         $container->setAlias('miliooo_friends.specifications.can_delete_relationship', $config['specifications']['can_delete_relationship']);
         $container->setAlias('miliooo_friends.user_relationships_provider', $config['user_relationships_provider']);
