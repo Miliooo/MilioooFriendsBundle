@@ -17,25 +17,25 @@ use Miliooo\Friends\User\UserRelationshipInterface;
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
-class UserRelationships
+class UserRelationships implements UserRelationshipsInterface
 {
     /**
-     * @var \Miliooo\Friends\User\UserRelationshipInterface
+     * @var UserRelationshipInterface
      */
     protected $owner;
 
     /**
-     * @var array|\Miliooo\Friends\User\UserRelationshipInterface[]
+     * @var array|UserRelationshipInterface[]
      */
     protected $friends;
 
     /**
-     * @var array|\Miliooo\Friends\User\UserRelationshipInterface[]
+     * @var array|UserRelationshipInterface[]
      */
     protected $followers;
 
     /**
-     * @var array|\Miliooo\Friends\User\UserRelationshipInterface[]
+     * @var array|UserRelationshipInterface[]
      */
     protected $following;
 
