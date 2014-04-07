@@ -18,7 +18,7 @@ use Miliooo\Friends\Model\RelationshipInterface;
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
-class NewRelationshipEvent extends Event
+class RelationshipEvent extends Event
 {
     private $relationship;
 
