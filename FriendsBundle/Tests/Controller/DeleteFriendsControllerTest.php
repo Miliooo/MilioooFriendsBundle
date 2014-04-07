@@ -10,6 +10,7 @@
 
 namespace Miliooo\FriendsBundle\Tests\Controller;
 
+use Miliooo\Friends\Command\DeleteRelationshipCommand;
 use Miliooo\FriendsBundle\Controller\DeleteFriendsController;
 use Miliooo\Friends\TestHelpers\UserRelationshipTestHelper;
 use Miliooo\Friends\ValueObjects\UserRelationship;
@@ -39,13 +40,7 @@ class DeleteFriendsControllerTest extends \PHPUnit_Framework_TestCase
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
-    private $repository;
-
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    private $deleter;
-
+    private $handler;
 
     private $loggedInUser;
 
@@ -60,13 +55,12 @@ class DeleteFriendsControllerTest extends \PHPUnit_Framework_TestCase
     {
         $this->loggedInUserProvider = $this->getMock('Miliooo\Friends\User\LoggedInUserProviderInterface');
         $this->transformer = $this->getMock('Miliooo\Friends\User\UserRelationshipTransformerInterface');
-        $this->repository = $this->getMock('Miliooo\Friends\Repository\RelationshipRepositoryInterface');
-        $this->deleter = $this->getMock('Miliooo\Friends\Deleter\RelationshipDeleterSecureInterface');
+        $this->handler = $this->getMock('Miliooo\Friends\Command\Handler\DeleteRelationshipCommandHandlerInterface');
+
         $this->controller = new DeleteFriendsController(
             $this->loggedInUserProvider,
             $this->transformer,
-            $this->repository,
-            $this->deleter
+            $this->handler
         );
 
         $this->loggedInUser = new UserRelationshipTestHelper('1');
@@ -78,8 +72,7 @@ class DeleteFriendsControllerTest extends \PHPUnit_Framework_TestCase
     {
         $this->expectsLoggedInUser();
         $this->expectsFollowedObject();
-        $this->expectsRepositoryReturnsRelationship();
-        $this->expectsDelete();
+        $this->expectsHandlerCall();
         $this->controller->deleteRelationship(2);
     }
 
@@ -95,17 +88,12 @@ class DeleteFriendsControllerTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($this->followed));
     }
 
-    protected function expectsRepositoryReturnsRelationship()
+    protected function expectsHandlerCall()
     {
         $userRelationship = new UserRelationship($this->loggedInUser, $this->followed);
-        $this->repository->expects($this->once())->method('findRelationship')->with($userRelationship)
-            ->will($this->returnValue($this->relationship));
-    }
-
-    protected function expectsDelete()
-    {
-        $this->deleter->expects($this->once())->method('deleteRelationship')
-            ->with($this->loggedInUser, $this->relationship)
-            ->will($this->returnValue($this->relationship));
+        $command = new DeleteRelationshipCommand();
+        $command->setLoggedInUser($this->loggedInUser);
+        $command->setUserRelationship($userRelationship);
+        $this->handler->expects($this->once())->method('handle')->with($command);
     }
 }

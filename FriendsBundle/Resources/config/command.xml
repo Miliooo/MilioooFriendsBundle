@@ -12,6 +12,13 @@
             <argument type="service" id="event_dispatcher" />
         </service>
 
+        <service id="miliooo_friends.handler.delete_relationship.default"
+                 class="Miliooo\Friends\Command\Handler\DeleteRelationshipCommandHandler">
+            <argument type="service" id="miliooo_friends.deleter.relationship_deleter_secure_aware" />
+            <argument type="service" id="miliooo_friends.repository.relationship" />
+            <argument type="service" id="event_dispatcher" />
+        </service>
+
     </services>
 
 </container>

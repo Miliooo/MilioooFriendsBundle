@@ -61,6 +61,7 @@ class MilioooFriendsExtensionTest extends \PHPUnit_Framework_TestCase
         $this->assertHasDefinition('miliooo_friends.user_relationships_provider');
         $this->assertHasDefinition('miliooo_friends.twig_extension');
         $this->assertHasDefinition('miliooo_friends.handler.create_relationship');
+        $this->assertHasDefinition('miliooo_friends.handler.delete_relationship');
     }
 
 

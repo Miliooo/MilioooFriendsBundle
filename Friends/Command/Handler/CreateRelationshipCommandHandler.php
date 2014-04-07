@@ -14,7 +14,7 @@ use Miliooo\Friends\Creator\RelationshipCreatorInterface;
 use Miliooo\Friends\Command\CreateRelationshipCommand;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Miliooo\Friends\Event\MilioooFriendsEvents;
-use Miliooo\Friends\Event\NewRelationshipEvent;
+use Miliooo\Friends\Event\RelationshipEvent;
 
 /**
  * The create relationship command handler is responsible for handling the create relationship command.
@@ -57,7 +57,7 @@ class CreateRelationshipCommandHandler implements CreateRelationshipCommandHandl
         }
 
         if ($newRelationship) {
-            $event = new NewRelationshipEvent($newRelationship);
+            $event = new RelationshipEvent($newRelationship);
             $this->dispatcher->dispatch(MilioooFriendsEvents::RELATIONSHIP_CREATED, $event);
         }
     }

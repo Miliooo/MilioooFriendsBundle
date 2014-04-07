@@ -10,7 +10,7 @@
 
 namespace Miliooo\Tests\Event;
 
-use Miliooo\Friends\Event\NewRelationshipEvent;
+use Miliooo\Friends\Event\RelationshipEvent;
 
 /**
  * Test file for Miliooo\Friends\Event\NewRelationshipEvent
@@ -25,14 +25,14 @@ class NewRelationshipEventTest extends \PHPUnit_Framework_TestCase
     private $relationship;
 
     /**
-     * @var NewRelationshipEvent
+     * @var RelationshipEvent
      */
     private $event;
 
     public function setUp()
     {
         $this->relationship = $this->getMock('Miliooo\Friends\Model\RelationshipInterface');
-        $this->event = new NewRelationshipEvent($this->relationship);
+        $this->event = new RelationshipEvent($this->relationship);
     }
 
     public function testInstanceOf()

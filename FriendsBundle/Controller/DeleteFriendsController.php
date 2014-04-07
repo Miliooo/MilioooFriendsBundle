@@ -13,13 +13,11 @@ namespace Miliooo\FriendsBundle\Controller;
 use Miliooo\Friends\User\LoggedInUserProviderInterface;
 use Miliooo\Friends\User\UserRelationshipTransformerInterface;
 use Miliooo\Friends\ValueObjects\UserRelationship;
-use Miliooo\Friends\Repository\RelationshipRepositoryInterface;
-use Miliooo\Friends\Deleter\RelationshipDeleterSecureInterface;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Miliooo\Friends\Exceptions\FriendException;
 use Miliooo\Friends\Exceptions\IdenticalFollowerFollowedException;
-use Miliooo\Friends\User\UserRelationshipInterface;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Miliooo\Friends\Command\Handler\DeleteRelationshipCommandHandlerInterface;
+use Miliooo\Friends\Command\DeleteRelationshipCommand;
 
 /**
  * The delete friends controller is responsible for deleting relationships
@@ -29,116 +27,77 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 class DeleteFriendsController
 {
     /**
-     * @var \Miliooo\Friends\User\LoggedInUserProviderInterface
+     * @var LoggedInUserProviderInterface
      */
     private $loggedInUserProvider;
 
     /**
-     * @var \Miliooo\Friends\User\UserRelationshipTransformerInterface
+     * @var UserRelationshipTransformerInterface
      */
     private $transformer;
 
     /**
-     * @var \Miliooo\Friends\Repository\RelationshipRepositoryInterface
+     * @var DeleteRelationshipCommandHandlerInterface
      */
-    private $repository;
-
-    private $deleter;
+    private $handler;
 
     /**
      * Constructor.
      *
-     * @param LoggedInUserProviderInterface $loggedInUserProvider
-     * @param UserRelationshipTransformerInterface $transformer
-     * @param RelationshipRepositoryInterface $repository
-     * @param RelationshipDeleterSecureInterface $deleter
+     * @param LoggedInUserProviderInterface             $loggedInUserProvider
+     * @param UserRelationshipTransformerInterface      $transformer
+     * @param DeleteRelationshipCommandHandlerInterface $handler
      */
     public function __construct(
         LoggedInUserProviderInterface $loggedInUserProvider,
         UserRelationshipTransformerInterface $transformer,
-        RelationshipRepositoryInterface $repository,
-        RelationshipDeleterSecureInterface $deleter
+        DeleteRelationshipCommandHandlerInterface $handler
     )
     {
         $this->loggedInUserProvider = $loggedInUserProvider;
         $this->transformer = $transformer;
-        $this->repository = $repository;
-        $this->deleter = $deleter;
+        $this->handler = $handler;
     }
 
     /**
-     * Deletes a relationship for the logged in user.
-     *
      * @param mixed $userRelationshipId
      *
-     * @return response
+     * @return JsonResponse
      */
     public function deleteRelationship($userRelationshipId)
     {
         $loggedInUser = $this->loggedInUserProvider->getAuthenticatedUser();
         $followed = $this->transformer->transformToObject($userRelationshipId);
 
-        //try to make an user relationship value object, catches the errors and returns a failure response when failed.
-        $userRelationshipOrResponse = $this->getUserRelationshipOrErrorResponse($loggedInUser, $followed);
-        if ($userRelationshipOrResponse instanceof Response) {
-            return $userRelationshipOrResponse;
-        }
+        $data['user_relationship_id'] = $userRelationshipId;
+        $data['error'] = false;
 
-        //rename this so it makes sense again....
-        $userRelationship = $userRelationshipOrResponse;
-
-        $relationship = $this->repository->findRelationship($userRelationship);
-        if ($relationship === null) {
-            return $this->onFailure('the relationship does not exist');
-        }
-
-        try {
-            $this->deleter->deleteRelationship($loggedInUser, $relationship);
-        } catch (AccessDeniedException $e) {
-            return $this->onFailure('Not enough rights to delete this relationship');
-        }
-
-        return $this->onSuccess();
-    }
-
-    /**
-     * @return Response
-     */
-    public function onSuccess()
-    {
-        return new Response('success');
-    }
-
-    /**
-     * @param string $failureReason
-     *
-     * @return Response
-     */
-    public function onFailure($failureReason)
-    {
-        return new Response($failureReason);
-    }
-
-    /**
-     * Tries to create a user relationship object catches the exceptions when failed and returns an onFailure response.
-     *
-     * @param UserRelationshipInterface $loggedInUser The logged in user
-     * @param UserRelationshipInterface $followed     The followed user
-     *
-     * @return Response|UserRelationship
-     */
-    protected function getUserRelationshipOrErrorResponse(UserRelationshipInterface $loggedInUser, UserRelationshipInterface $followed)
-    {
         try {
             $userRelationship = new UserRelationship($loggedInUser, $followed);
         } catch (FriendException $e) {
             if ($e instanceof IdenticalFollowerFollowedException) {
-                return $this->onFailure('You can not add or delete yourself');
+                //impossible user relationship
+                $data['error'] = true;
             } else {
-                return $this->onFailure('unknown exception');
+                //uncaught error
+                $data['error'] = true;
             }
         }
+        //we can't create the user relationship value object. This should never happen
+        if ($data['error'] === true) {
 
-        return $userRelationship;
+            return new JsonResponse($data);
+        }
+
+        $command = new DeleteRelationshipCommand();
+        $command->setUserRelationship($userRelationship);
+        $command->setLoggedInUser($loggedInUser);
+        //since we want our handlers to be able to be asynchronous we don't check if they really handled it.
+        //worst thing that could happen is an user deleted a friendship but it didn't got deleted.
+        $this->handler->handle($command);
+
+        $data['success'] = true;
+
+        return new JsonResponse($data);
     }
 }

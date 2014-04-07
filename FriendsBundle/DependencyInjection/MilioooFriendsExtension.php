@@ -47,6 +47,7 @@ class MilioooFriendsExtension extends Extension
         $container->setAlias('miliooo_friends.twig_extension', $config['twig_extension']);
 
         $container->setAlias('miliooo_friends.handler.create_relationship', $config['handler']['create_relationship']);
+        $container->setAlias('miliooo_friends.handler.delete_relationship', $config['handler']['delete_relationship']);
     }
 
     /**

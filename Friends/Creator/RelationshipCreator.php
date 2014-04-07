@@ -37,6 +37,8 @@ class RelationshipCreator implements RelationshipCreatorInterface
     protected $relationshipClass;
 
     /**
+     * Constructor.
+     *
      * @param RelationshipRepositoryInterface $relationshipRepository A relationship repository instance
      * @param string                          $relationshipClass      FQCN of the relationship class
      */

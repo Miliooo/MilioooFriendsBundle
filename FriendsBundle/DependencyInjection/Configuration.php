@@ -47,6 +47,7 @@ class Configuration implements ConfigurationInterface
                 ->addDefaultsIfNotSet()
                 ->children()
                 ->scalarNode('create_relationship')->defaultValue('miliooo_friends.handler.create_relationship.default')->cannotBeEmpty()->end()
+                ->scalarNode('delete_relationship')->defaultValue('miliooo_friends.handler.delete_relationship.default')->cannotBeEmpty()->end()
                 ->end()
             ->end()
 

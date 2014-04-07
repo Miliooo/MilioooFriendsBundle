@@ -18,4 +18,6 @@ namespace Miliooo\Friends\Event;
 class MilioooFriendsEvents
 {
     const RELATIONSHIP_CREATED = 'miliooo_friends.relationship_created';
+
+    const RELATIONSHIP_REMOVED = 'miliooo_friends.relationship_deleted';
 }
