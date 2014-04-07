@@ -19,11 +19,6 @@
             <argument>%miliooo_friends.relationship_class%</argument>
         </service>
 
-        <service id="miliooo_friends.relationship_creator_event_aware.default" class="Miliooo\Friends\Creator\RelationshipCreatorEventAware">
-            <argument type="service" id="miliooo_friends.relationship_creator"/>
-            <argument type="service" id="event_dispatcher"/>
-        </service>
-
         <service id="miliooo_friends.logged_in_user_provider.default" class="Miliooo\Friends\User\LoggedInUserProviderSecurityContext">
             <argument type="service" id="security.context"/>
         </service>

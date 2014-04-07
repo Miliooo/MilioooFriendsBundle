@@ -21,8 +21,6 @@ interface CreateRelationshipCommandHandlerInterface
 {
     /**
      * @param CreateRelationshipCommand $command
-     *
-     * @return mixed
      */
     public function handle(CreateRelationshipCommand $command);
 }

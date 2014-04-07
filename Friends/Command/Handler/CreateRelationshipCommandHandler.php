@@ -12,6 +12,9 @@ namespace Miliooo\Friends\Command\Handler;
 
 use Miliooo\Friends\Creator\RelationshipCreatorInterface;
 use Miliooo\Friends\Command\CreateRelationshipCommand;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Miliooo\Friends\Event\MilioooFriendsEvents;
+use Miliooo\Friends\Event\NewRelationshipEvent;
 
 /**
  * The create relationship command handler is responsible for handling the create relationship command.
@@ -26,13 +29,20 @@ class CreateRelationshipCommandHandler implements CreateRelationshipCommandHandl
     private $relationshipCreator;
 
     /**
+     * @var EventDispatcherInterface
+     */
+    private $dispatcher;
+
+    /**
      * Constructor.
      *
      * @param RelationshipCreatorInterface $relationshipCreator
+     * @param EventDispatcherInterface     $dispatcher
      */
-    public function __construct(RelationshipCreatorInterface $relationshipCreator)
+    public function __construct(RelationshipCreatorInterface $relationshipCreator, EventDispatcherInterface $dispatcher)
     {
         $this->relationshipCreator = $relationshipCreator;
+        $this->dispatcher = $dispatcher;
     }
 
     /**
@@ -40,6 +50,15 @@ class CreateRelationshipCommandHandler implements CreateRelationshipCommandHandl
      */
     public function handle(CreateRelationshipCommand $command)
     {
-        $this->relationshipCreator->createRelationship($command->getUserRelationship(), $command->getDateCreated());
+        try {
+            $newRelationship = $this->relationshipCreator->createRelationship($command->getUserRelationship(), $command->getDateCreated());
+        } catch (\Exception $e) {
+            return;
+        }
+
+        if ($newRelationship) {
+            $event = new NewRelationshipEvent($newRelationship);
+            $this->dispatcher->dispatch(MilioooFriendsEvents::RELATIONSHIP_CREATED, $event);
+        }
     }
 }

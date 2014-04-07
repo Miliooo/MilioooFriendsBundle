@@ -9,6 +9,7 @@
         <service id="miliooo_friends.handler.create_relationship.default"
                  class="Miliooo\Friends\Command\Handler\CreateRelationshipCommandHandler">
             <argument type="service" id="miliooo_friends.relationship_creator"/>
+            <argument type="service" id="event_dispatcher" />
         </service>
 
     </services>
