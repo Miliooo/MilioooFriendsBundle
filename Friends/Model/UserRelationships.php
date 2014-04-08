@@ -15,6 +15,12 @@ use Miliooo\Friends\User\UserRelationshipInterface;
 /**
  * This class is responsible for providing common functions for checking relationships for a given user.
  *
+ * We use the getRelationshipIds from this class and not the user relationship interface because we want to be able
+ * to easily serialize and unserialize this class.
+ *
+ * Since all the checks for a given relationship between two users only depends on the userRelationshipId there is no need
+ * to serialize whole user objects.
+ *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
 class UserRelationships implements UserRelationshipsInterface
@@ -25,46 +31,42 @@ class UserRelationships implements UserRelationshipsInterface
     protected $owner;
 
     /**
-     * @var array|UserRelationshipInterface[]
+     * @var array
      */
     protected $friends;
 
     /**
-     * @var array|UserRelationshipInterface[]
+     * @var array
      */
     protected $followers;
 
     /**
-     * @var array|UserRelationshipInterface[]
+     * @var array
      */
     protected $following;
 
     /**
-     * @param UserRelationshipInterface   $owner     The user for whom we populate the relationships data
-     * @param UserRelationshipInterface[] $friends   The friends from the user
-     * @param UserRelationshipInterface[] $followers The people that follow the user
-     * @param UserRelationshipInterface[] $following The people that are following the user
+     * Constructor.
+     *
+     * @param string $ownerId      The UserRelationshipId from the owner
+     * @param []     $friendIds    Array with friend UserRelationshipIds where the keys are the userRelationshipIds
+     * @param []     $followerIds  Array with follower UserRelationshipIds where the keys are the userRelationshipIds
+     * @param []     $followingIds Array with following UserRelationshipIds where the keys are the userRelationshipIds
      */
-    public function __construct(UserRelationshipInterface $owner, array $friends, array $followers, array $following)
+    public function __construct($ownerId, array $friendIds, array $followerIds, array $followingIds)
     {
-        $this->owner = $owner;
-        $this->friends = $friends;
-        $this->followers = $followers;
-        $this->following = $following;
+        $this->owner = $ownerId;
+        $this->friends = $friendIds;
+        $this->followers = $followerIds;
+        $this->following = $followingIds;
     }
 
     /**
-     * Checks if the owner is following the given user.
-     *
-     * This can be used to determinate which action to take, follow or no longer follow a given user.
-     *
-     * @param UserRelationshipInterface $user The user for whom we check if the owner is following him
-     *
-     * @return boolean True if the owner is following this user, false otherwise.
+     * {@inheritdoc}
      */
-    public function isFollowing(UserRelationshipInterface $user)
+    public function isFollowing($userRelationshipId)
     {
-        if ($this->isOwnerFriendsWithOrFollowingUser($user)) {
+        if ($this->isOwnerFriendsWithOrFollowingUser($userRelationshipId)) {
             return true;
         }
 
@@ -72,45 +74,39 @@ class UserRelationships implements UserRelationshipsInterface
     }
 
     /**
-     * Gets the friends of the owner.
-     *
-     * @return array|\Miliooo\Friends\User\UserRelationshipInterface[]
+     * {@inheritdoc}
      */
     public function getFriends()
     {
-        return $this->friends;
+        return array_keys($this->friends);
     }
 
     /**
-     * Gets the followers of the owner.
-     *
-     * @return array|\Miliooo\Friends\User\UserRelationshipInterface[]
+     * {@inheritdoc}
      */
     public function getFollowers()
     {
-        return $this->followers;
+        return array_keys($this->followers);
     }
 
     /**
-     * Gets whom the owner is following.
-     *
-     * @return array|\Miliooo\Friends\User\UserRelationshipInterface[]
+     * {@inheritdoc}
      */
     public function getFollowing()
     {
-        return $this->following;
+        return array_keys($this->following);
     }
 
     /**
-     * Checks if the owner is friends with or follows the given user.
+     * Checks if the owner is friendIds with or follows the given user.
      *
-     * @param UserRelationshipInterface $user The user for whom we check if the owner is following or friends with him
+     * @param string $userRelationshipId The user for whom we check if the owner is following or friend with him
      *
      * @return boolean True if there is a relationship, false otherwise
      */
-    protected function isOwnerFriendsWithOrFollowingUser(UserRelationshipInterface $user)
+    protected function isOwnerFriendsWithOrFollowingUser($userRelationshipId)
     {
-        if (in_array($user, $this->friends) || in_array($user, $this->following)) {
+        if (array_key_exists($userRelationshipId, $this->friends) || array_key_exists($userRelationshipId, $this->following)) {
             return true;
         }
 

@@ -34,6 +34,7 @@ class MilioooFriendsExtension extends Extension
         $loader->load('command.xml');
         $loader->load('controllers.xml');
         $loader->load('deleter.xml');
+        $loader->load('listener.xml');
         $loader->load('services.xml');
         $loader->load('specifications.xml');
 

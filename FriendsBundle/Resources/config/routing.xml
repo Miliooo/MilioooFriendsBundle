@@ -12,7 +12,7 @@
         <default key="_controller">miliooo_friends.controller.delete_friends_controller:DeleteRelationship</default>
     </route>
 
-    <route id="miliooo_friends_get_followers" pattern="/friends_overview/{userRelationshipId}">
+    <route id="miliooo_friends_overview" pattern="/friends_overview/{userRelationshipId}">
         <default key="_controller">miliooo_friends.controller.show_friends_controller:getFriendsDataAction</default>
     </route>
 

@@ -84,6 +84,7 @@ class MilioooFriendsExtensionTest extends \PHPUnit_Framework_TestCase
         $yaml = <<<EOF
 relationship_class: \Acme\MyBundle\Entity\Relationship
 user_relationship_transformer: foo.service
+cache_provider: bar_service
 EOF;
         $parser = new Parser();
 

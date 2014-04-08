@@ -47,6 +47,8 @@ class AddFriendsController
     protected $handler;
 
     /**
+     * Constructor.
+     *
      * @param CreateRelationshipCommandHandlerInterface $handler
      * @param LoggedInUserProviderInterface             $userProvider
      * @param UserRelationshipTransformerInterface      $transformer

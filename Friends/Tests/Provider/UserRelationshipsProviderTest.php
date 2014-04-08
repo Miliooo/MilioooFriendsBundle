@@ -74,9 +74,11 @@ class UserRelationshipsProviderTest extends \PHPUnit_Framework_TestCase
         $this->relationship->expects($this->once())->method('getFollower')
             ->will($this->returnValue($this->follower));
 
+        $this->follower->expects($this->once())->method('getUserRelationshipId')->will($this->returnValue(2));
+
         $result = $this->provider->getUserRelationships($this->user);
 
-        $this->assertEquals($result->getFollowers(), [$this->follower]);
+        $this->assertEquals($result->getFollowers(), [2]);
         $this->assertEmpty($result->getFriends());
         $this->assertEmpty($result->getFollowing());
 
