@@ -49,6 +49,8 @@ class MilioooFriendsExtension extends Extension
 
         $container->setAlias('miliooo_friends.handler.create_relationship', $config['handler']['create_relationship']);
         $container->setAlias('miliooo_friends.handler.delete_relationship', $config['handler']['delete_relationship']);
+
+        $container->setAlias('miliooo_friends.cache_provider', $config['cache_provider']);
     }
 
     /**
