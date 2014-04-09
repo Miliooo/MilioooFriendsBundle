@@ -94,9 +94,8 @@ class UserRelationshipsProvider implements UserRelationshipsProviderInterface
      */
     private function getFriendsFromFollowingAndFollowersArray($following, $followers)
     {
-        $friends = array_intersect($following, $followers);
+        return array_intersect_key($following, $followers);
 
-        return array_values($friends);
     }
 
     /**
