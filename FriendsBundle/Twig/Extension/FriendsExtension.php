@@ -77,7 +77,7 @@ class FriendsExtension extends \Twig_Extension
         }
 
         $userRelationships = $this->userRelationshipProvider->getUserRelationships($owner);
-        if ($userRelationships->isFollowing($user)) {
+        if ($userRelationships->isFollowing($user->getUserRelationshipId())) {
             return true;
         }
 
