@@ -40,7 +40,7 @@
         <div class="tab-pane fade" id="followers">
             <ul>
                 {% for userRelationshipId in userRelationships.followers %}
-                    {% if(miliooo_friends_is_following(user)) %}
+                    {% if(miliooo_friends_is_following(userRelationshipId)) %}
                         {% set formAction %}{{ url('miliooo_friends_delete', {'userRelationshipId': userRelationshipId}) }}{% endset %}
                         {% set submitValue %}{% trans from 'MilioooFriendsBundle' %}action.unfollow{% endtrans %}{% endset %}
                     {% else %}

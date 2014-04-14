@@ -13,7 +13,6 @@ namespace Miliooo\FriendsBundle\Twig\Extension;
 use Miliooo\Friends\User\LoggedInUserProviderInterface;
 use Miliooo\Friends\Provider\UserRelationshipsProviderInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Miliooo\Friends\User\UserRelationshipInterface;
 
 /**
  * Twig extension class
@@ -65,11 +64,11 @@ class FriendsExtension extends \Twig_Extension
     /**
      * Checks if the logged in user (owner) is following the given user.
      *
-     * @param UserRelationshipInterface $user
+     * @param string $userRelationshipId
      *
      * @return boolean true if the logged in user is following the owner, false otherwise
      */
-    public function isFollowing(UserRelationshipInterface $user)
+    public function isFollowing($userRelationshipId)
     {
         $owner = $this->hasLoggedInUser();
         if (!$owner) {
@@ -77,7 +76,7 @@ class FriendsExtension extends \Twig_Extension
         }
 
         $userRelationships = $this->userRelationshipProvider->getUserRelationships($owner);
-        if ($userRelationships->isFollowing($user->getUserRelationshipId())) {
+        if ($userRelationships->isFollowing($userRelationshipId)) {
             return true;
         }
 
