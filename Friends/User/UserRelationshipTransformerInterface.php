@@ -18,11 +18,11 @@ namespace Miliooo\Friends\User;
 interface UserRelationshipTransformerInterface
 {
     /**
-     * Transforms the user relationship id to an UserRelationshipInterface object.
+     * Transforms the user relationship id to an UserIdentifierInterface object.
      *
      * @param mixed $userRelationshipId
      *
-     * @return UserRelationshipInterface;
+     * @return UserIdentifierInterface;
      */
     public function transformToObject($userRelationshipId);
 }

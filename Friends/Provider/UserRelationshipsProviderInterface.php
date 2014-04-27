@@ -10,7 +10,7 @@
 
 namespace Miliooo\Friends\Provider;
 
-use Miliooo\Friends\User\UserRelationshipInterface;
+use Miliooo\Friends\User\UserIdentifierInterface;
 use Miliooo\Friends\Model\UserRelationships;
 
 /**
@@ -23,9 +23,9 @@ interface UserRelationshipsProviderInterface
     /**
      * Gets the user relationships.
      *
-     * @param UserRelationshipInterface $user The user for whom we get the relationships.
+     * @param UserIdentifierInterface $user The user for whom we get the relationships.
      *
      * @return UserRelationships An user relationships object.
      */
-    public function getUserRelationships(UserRelationshipInterface $user);
+    public function getUserRelationships(UserIdentifierInterface $user);
 }

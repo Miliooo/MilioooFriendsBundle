@@ -40,7 +40,7 @@ class DeleteRelationshipCommandTest extends \PHPUnit_Framework_TestCase
 
     public function test_loggedInUser()
     {
-        $user = $this->getMock('Miliooo\Friends\User\UserRelationshipInterface');
+        $user = $this->getMock('Miliooo\Friends\User\UserIdentifierInterface');
 
         $this->command->setLoggedInUser($user);
         $this->assertSame($user, $this->command->getLoggedInUser());

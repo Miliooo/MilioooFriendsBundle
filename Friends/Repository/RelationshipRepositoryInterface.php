@@ -12,7 +12,7 @@ namespace Miliooo\Friends\Repository;
 
 use Miliooo\Friends\Model\RelationshipInterface;
 use Miliooo\Friends\ValueObjects\UserRelationship;
-use Miliooo\Friends\User\UserRelationshipInterface;
+use Miliooo\Friends\User\UserIdentifierInterface;
 
 /**
  * Class RelationshipRepositoryInterface
@@ -50,18 +50,18 @@ interface RelationshipRepositoryInterface
     /**
      * Gets the persons the current user is following.
      *
-     * @param UserRelationshipInterface $user
+     * @param UserIdentifierInterface $user
      *
      * @return RelationshipInterface[] An array with relationships
      */
-    public function getFollowing(UserRelationshipInterface $user);
+    public function getFollowing(UserIdentifierInterface $user);
 
     /**
      * Gets the persons who follow the current user.
      *
-     * @param UserRelationshipInterface $user
+     * @param UserIdentifierInterface $user
      *
      * @return RelationshipInterface[] An array with relationships
      */
-    public function getFollowers(UserRelationshipInterface $user);
+    public function getFollowers(UserIdentifierInterface $user);
 }

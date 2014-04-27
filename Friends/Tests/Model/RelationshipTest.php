@@ -11,8 +11,8 @@
 namespace Miliooo\Friends\Tests\Model;
 
 use Miliooo\Friends\Model\Relationship;
-use Miliooo\Friends\TestHelpers\UserRelationshipTestHelper;
-use Miliooo\Friends\User\UserRelationshipInterface;
+use Miliooo\Friends\TestHelpers\UserIdentifierTestHelper;
+use Miliooo\Friends\User\UserIdentifierInterface;
 use Miliooo\Friends\ValueObjects\UserRelationship;
 
 /**
@@ -23,12 +23,12 @@ use Miliooo\Friends\ValueObjects\UserRelationship;
 class RelationshipTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var UserRelationshipInterface
+     * @var UserIdentifierInterface
      */
     private $follower;
 
     /**
-     * @var UserRelationshipInterface
+     * @var UserIdentifierInterface
      */
     private $followed;
 
@@ -46,8 +46,8 @@ class RelationshipTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->follower = new UserRelationshipTestHelper('1');
-        $this->followed = new UserRelationshipTestHelper('2');
+        $this->follower = new UserIdentifierTestHelper('1');
+        $this->followed = new UserIdentifierTestHelper('2');
         $this->dateCreated = new \DateTime('2013-10-10 00:00:00');
         $userRelationship = new UserRelationship($this->follower, $this->followed);
         $this->relationship = new Relationship($userRelationship, $this->dateCreated);

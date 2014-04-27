@@ -11,7 +11,7 @@
 namespace Miliooo\Friends\Provider;
 
 use Miliooo\Friends\Model\UserRelationships;
-use Miliooo\Friends\User\UserRelationshipInterface;
+use Miliooo\Friends\User\UserIdentifierInterface;
 use Miliooo\Friends\Repository\RelationshipRepositoryInterface;
 
 
@@ -40,27 +40,27 @@ class UserRelationshipsProvider implements UserRelationshipsProviderInterface
     /**
      * {@inheritdoc}
      */
-    public function getUserRelationships(UserRelationshipInterface $user)
+    public function getUserRelationships(UserIdentifierInterface $user)
     {
         $data = $this->getAllRelationships($user);
 
-        return new UserRelationships($user->getUserRelationshipId(), $data['friends'], $data['followers'], $data['following']);
+        return new UserRelationships($user->getIdentifierId(), $data['friends'], $data['followers'], $data['following']);
     }
 
     /**
      * Gets an array with people following the given user.
      *
-     * @param UserRelationshipInterface $user
+     * @param UserIdentifierInterface $user
      *
      * @return array
      */
-    private function getFollowingArray(UserRelationshipInterface $user)
+    private function getFollowingArray(UserIdentifierInterface $user)
     {
         $relationships = $this->repository->getFollowing($user);
 
         $following = [];
         foreach ($relationships as $relationship) {
-            $following[$relationship->getFollowed()->getUserRelationshipId()] = 1;
+            $following[$relationship->getFollowed()->getIdentifierId()] = 1;
         }
 
         return $following;
@@ -69,16 +69,16 @@ class UserRelationshipsProvider implements UserRelationshipsProviderInterface
     /**
      * Gets an array with followers from the given user.
      *
-     * @param UserRelationshipInterface $user
+     * @param UserIdentifierInterface $user
      *
      * @return array
      */
-    private function getFollowersArray(UserRelationshipInterface $user)
+    private function getFollowersArray(UserIdentifierInterface $user)
     {
         $followers = [];
         $relationships = $this->repository->getFollowers($user);
         foreach ($relationships as $relationship) {
-            $followers[$relationship->getFollower()->getUserRelationshipId()] = 1;
+            $followers[$relationship->getFollower()->getIdentifierId()] = 1;
         }
 
         return $followers;
@@ -87,10 +87,10 @@ class UserRelationshipsProvider implements UserRelationshipsProviderInterface
     /**
      * Gets the friends from intersecting the following and followers
      *
-     * @param UserRelationshipInterface[] $following
-     * @param UserRelationshipInterface[] $followers
+     * @param UserIdentifierInterface[] $following
+     * @param UserIdentifierInterface[] $followers
      *
-     * @return UserRelationshipInterface[]
+     * @return UserIdentifierInterface[]
      */
     private function getFriendsFromFollowingAndFollowersArray($following, $followers)
     {
@@ -101,11 +101,11 @@ class UserRelationshipsProvider implements UserRelationshipsProviderInterface
     /**
      * Gets an array with all the relationships from the given user.
      *
-     * @param UserRelationshipInterface $user
+     * @param UserIdentifierInterface $user
      *
      * @return array
      */
-    private function getAllRelationships(UserRelationshipInterface $user)
+    private function getAllRelationships(UserIdentifierInterface $user)
     {
         $data['followers'] = $this->getFollowersArray($user);
         $data['following'] = $this->getFollowingArray($user);

@@ -11,7 +11,7 @@
 namespace Miliooo\FriendsBundle\Controller;
 
 use Miliooo\Friends\Provider\UserRelationshipsProviderInterface;
-use Miliooo\Friends\User\UserRelationshipInterface;
+use Miliooo\Friends\User\UserIdentifierInterface;
 use Miliooo\Friends\User\UserRelationshipTransformerInterface;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 
@@ -81,7 +81,7 @@ class ShowFriendsController
      *
      * @param string $userRelationshipId
      *
-     * @return UserRelationshipInterface
+     * @return UserIdentifierInterface
      */
     protected function getUser($userRelationshipId)
     {

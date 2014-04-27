@@ -10,7 +10,7 @@
 
 namespace Miliooo\Friends\Model;
 
-use Miliooo\Friends\User\UserRelationshipInterface;
+use Miliooo\Friends\User\UserIdentifierInterface;
 
 /**
  * The Relationship model interface
@@ -25,7 +25,7 @@ interface RelationshipInterface
      * If Mike wants to follow Ann then Mike is the follower and Ann is being followed.
      * The getFollower will return Mike
      *
-     * @return UserRelationshipInterface The person who follows another person.
+     * @return UserIdentifierInterface The person who follows another person.
      */
     public function getFollower();
 
@@ -35,7 +35,7 @@ interface RelationshipInterface
      * If Mike wants to follow Ann then Mike is the follower and Ann is being followed.
      * The getFollowed will return Ann
      *
-     * @return UserRelationshipInterface The person who is being followed.
+     * @return UserIdentifierInterface The person who is being followed.
      */
     public function getFollowed();
 

@@ -11,7 +11,7 @@
 namespace Miliooo\FriendsBundle\Tests\Entity;
 
 use Miliooo\FriendsBundle\Entity\Relationship;
-use Miliooo\Friends\TestHelpers\UserRelationshipTestHelper;
+use Miliooo\Friends\TestHelpers\UserIdentifierTestHelper;
 use Miliooo\Friends\ValueObjects\UserRelationship;
 
 /**
@@ -30,8 +30,8 @@ class RelationshipTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $follower = new UserRelationshipTestHelper('1');
-        $followed = new UserRelationshipTestHelper('2');
+        $follower = new UserIdentifierTestHelper('1');
+        $followed = new UserIdentifierTestHelper('2');
         $userRelationship = new UserRelationship($follower, $followed);
         $dateCreated = new \DateTime('now');
         $this->relationship = new Relationship($userRelationship, $dateCreated);

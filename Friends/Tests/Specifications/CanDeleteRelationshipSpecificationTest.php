@@ -37,7 +37,7 @@ class CanDeleteRelationshipSpecificationTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->user = $this->getMock('Miliooo\Friends\User\UserRelationshipInterface');
+        $this->user = $this->getMock('Miliooo\Friends\User\UserIdentifierInterface');
         $this->relationship = $this->getMock('Miliooo\Friends\Model\RelationshipInterface');
         $this->specification = new CanDeleteRelationshipSpecification();
     }
@@ -52,7 +52,7 @@ class CanDeleteRelationshipSpecificationTest extends \PHPUnit_Framework_TestCase
 
     public function testIsSatisfiedByReturnsTrue()
     {
-        $this->user->expects($this->any())->method('getUserRelationshipId')->will($this->returnValue(1));
+        $this->user->expects($this->any())->method('getIdentifierId')->will($this->returnValue(1));
         $this->relationship->expects($this->once())->method('getFollower')->will($this->returnValue($this->user));
 
         $this->assertTrue($this->specification->isSatisfiedBy($this->user, $this->relationship));
@@ -60,10 +60,10 @@ class CanDeleteRelationshipSpecificationTest extends \PHPUnit_Framework_TestCase
 
     public function testIsSatisfiedByReturnsFalse()
     {
-        $follower = $this->getMock('Miliooo\Friends\User\UserRelationshipInterface');
-        $follower->expects($this->once())->method('getUserRelationshipId')->will($this->returnValue(2));
+        $follower = $this->getMock('Miliooo\Friends\User\UserIdentifierInterface');
+        $follower->expects($this->once())->method('getIdentifierId')->will($this->returnValue(2));
 
-        $this->user->expects($this->once())->method('getUserRelationshipId')->will($this->returnValue(1));
+        $this->user->expects($this->once())->method('getIdentifierId')->will($this->returnValue(1));
         $this->relationship->expects($this->once())->method('getFollower')->will($this->returnValue($follower));
 
         $this->assertFalse($this->specification->isSatisfiedBy($this->user, $this->relationship));

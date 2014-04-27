@@ -10,7 +10,7 @@
 
 namespace Miliooo\Friends\Model;
 
-use Miliooo\Friends\User\UserRelationshipInterface;
+use Miliooo\Friends\User\UserIdentifierInterface;
 
 /**
  * This class is responsible for providing common functions for checking relationships for a given user.
@@ -26,7 +26,7 @@ use Miliooo\Friends\User\UserRelationshipInterface;
 class UserRelationships implements UserRelationshipsInterface
 {
     /**
-     * @var UserRelationshipInterface
+     * @var UserIdentifierInterface
      */
     protected $owner;
 

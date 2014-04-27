@@ -11,7 +11,7 @@
 namespace Miliooo\Friends\Deleter;
 
 use Miliooo\Friends\Model\RelationshipInterface;
-use Miliooo\Friends\User\UserRelationshipInterface;
+use Miliooo\Friends\User\UserIdentifierInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Miliooo\Friends\Specifications\CanDeleteRelationshipSpecificationInterface;
 
@@ -53,7 +53,7 @@ class RelationshipDeleterSecureAware implements RelationshipDeleterSecureInterfa
     /**
      * {@inheritDoc}
      */
-    public function deleteRelationship(UserRelationshipInterface $user, RelationshipInterface $relationship)
+    public function deleteRelationship(UserIdentifierInterface $user, RelationshipInterface $relationship)
     {
         if ($this->canDeleteSpecification->isSatisfiedBy($user, $relationship) === false) {
             throw new AccessDeniedException('Not enough rights to delete this relationship');

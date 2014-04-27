@@ -10,7 +10,7 @@
 
 namespace Miliooo\Friends\Specifications;
 
-use Miliooo\Friends\User\UserRelationshipInterface;
+use Miliooo\Friends\User\UserIdentifierInterface;
 use Miliooo\Friends\Model\RelationshipInterface;
 
 /**
@@ -23,12 +23,12 @@ class CanDeleteRelationshipSpecification implements CanDeleteRelationshipSpecifi
     /**
      * Decides whether the given user can delete the given relationship.
      *
-     * @param UserRelationshipInterface $user
+     * @param UserIdentifierInterface $user
      * @param RelationshipInterface     $relationship
      *
      * @return boolean true if the given user can delete the given relationship, false otherwise
      */
-    public function isSatisfiedBy(UserRelationshipInterface $user, RelationshipInterface $relationship)
+    public function isSatisfiedBy(UserIdentifierInterface $user, RelationshipInterface $relationship)
     {
         return $this->isCreatorOfRelationship($user, $relationship);
     }
@@ -36,15 +36,15 @@ class CanDeleteRelationshipSpecification implements CanDeleteRelationshipSpecifi
     /**
      * Checks if the given user is the creator of the relationship.
      *
-     * @param UserRelationshipInterface $user
+     * @param UserIdentifierInterface $user
      * @param RelationshipInterface     $relationship
      *
      * @return boolean true if user is creator of relationship, false otherwise.
      */
-    protected function isCreatorOfRelationship(UserRelationshipInterface $user, RelationshipInterface $relationship)
+    protected function isCreatorOfRelationship(UserIdentifierInterface $user, RelationshipInterface $relationship)
     {
-        $followerRelationshipId = $relationship->getFollower()->getUserRelationshipId();
-        $userRelationshipId = $user->getUserRelationshipId();
+        $followerRelationshipId = $relationship->getFollower()->getIdentifierId();
+        $userRelationshipId = $user->getIdentifierId();
 
         if ($followerRelationshipId !== $userRelationshipId) {
             return false;

@@ -10,7 +10,7 @@
 
 namespace Miliooo\Friends\Model;
 
-use Miliooo\Friends\User\UserRelationshipInterface;
+use Miliooo\Friends\User\UserIdentifierInterface;
 use Miliooo\Friends\ValueObjects\UserRelationship;
 
 /**
@@ -23,14 +23,14 @@ class Relationship implements RelationshipInterface
     /**
      * The user who decides to follow another user.
      *
-     * @var UserRelationshipInterface
+     * @var UserIdentifierInterface
      */
     protected $follower;
 
     /**
      * The user who is being followed.
      *
-     * @var UserRelationshipInterface
+     * @var UserIdentifierInterface
      */
     protected $followed;
 

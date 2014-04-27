@@ -10,7 +10,7 @@
 
 namespace Miliooo\Friends\Deleter;
 
-use Miliooo\Friends\User\UserRelationshipInterface;
+use Miliooo\Friends\User\UserIdentifierInterface;
 use Miliooo\Friends\Model\RelationshipInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
@@ -26,12 +26,12 @@ interface RelationshipDeleterSecureInterface
     /**
      * Deletes a relationship if the given user has enough rights to do so.
      *
-     * @param UserRelationshipInterface $user         The user we want to check the permissions to delete
+     * @param UserIdentifierInterface $user         The user we want to check the permissions to delete
      * @param RelationshipInterface     $relationship The relationship we want to check if the user can delete this
      *
      * @return RelationshipInterface The relationship we deleted.
      *
      * @throws AccessDeniedException if the user has not enough rights to delete this thread.
      */
-    public function deleteRelationship(UserRelationshipInterface $user, RelationshipInterface $relationship);
+    public function deleteRelationship(UserIdentifierInterface $user, RelationshipInterface $relationship);
 }

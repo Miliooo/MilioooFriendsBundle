@@ -10,14 +10,14 @@
 
 namespace Miliooo\Friends\TestHelpers;
 
-use Miliooo\Friends\User\UserRelationshipInterface;
+use Miliooo\Friends\User\UserIdentifierInterface;
 
 /**
- * Helper for the UserRelationshipInterface
+ * Helper for the UserIdentifierInterface
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
-class UserRelationshipTestHelper implements UserRelationshipInterface
+class UserIdentifierTestHelper implements UserIdentifierInterface
 {
     /**
      * @var mixed
@@ -42,7 +42,7 @@ class UserRelationshipTestHelper implements UserRelationshipInterface
      *
      * @return string The unique identifier
      */
-    public function getUserRelationshipId()
+    public function getIdentifierId()
     {
         return $this->userRelationshipId;
     }

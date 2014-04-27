@@ -25,9 +25,9 @@ interface LoggedInUserProviderInterface
      * This method is responsible for returning the authenticated user.
      *
      * If there is no authenticated user or the user does not implement
-     * the UserRelationshipInterface an AccessDeniedException should be thrown.
+     * the UserIdentifierInterface an AccessDeniedException should be thrown.
      *
-     * @return UserRelationshipInterface
+     * @return UserIdentifierInterface
      *
      * @throws AccessDeniedException if no authenticated or valid logged in user
      */

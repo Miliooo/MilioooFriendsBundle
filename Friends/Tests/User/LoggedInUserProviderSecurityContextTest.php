@@ -11,8 +11,8 @@
 namespace Miliooo\Friends\Tests\User;
 
 use Miliooo\Friends\User\LoggedInUserProviderSecurityContext;
-use Miliooo\Friends\TestHelpers\UserRelationshipTestHelper;
-use Miliooo\Friends\User\UserRelationshipInterface;
+use Miliooo\Friends\TestHelpers\UserIdentifierTestHelper;
+use Miliooo\Friends\User\UserIdentifierInterface;
 
 /**
  * Test file for Miliooo\Friends\User\LoggedInUserProviderSecurityContext
@@ -39,7 +39,7 @@ class LoggedInUserProviderSecurityContextTest extends \PHPUnit_Framework_TestCas
     private $securityToken;
 
     /**
-     * @var UserRelationshipInterface
+     * @var UserIdentifierInterface
      */
     private $loggedInUser;
 
@@ -47,7 +47,7 @@ class LoggedInUserProviderSecurityContextTest extends \PHPUnit_Framework_TestCas
     {
         $this->securityContext = $this->getMock('Symfony\Component\Security\Core\SecurityContextInterface');
         $this->securityToken = $this->getMock('Symfony\Component\Security\Core\Authentication\Token\TokenInterface');
-        $this->loggedInUser = new UserRelationshipTestHelper('1');
+        $this->loggedInUser = new UserIdentifierTestHelper('1');
         $this->provider = new LoggedInUserProviderSecurityContext($this->securityContext);
     }
 
@@ -58,7 +58,7 @@ class LoggedInUserProviderSecurityContextTest extends \PHPUnit_Framework_TestCas
 
     /**
      * @expectedException \Symfony\Component\Security\Core\Exception\AccessDeniedException
-     * @expectedExceptionMessage You must be logged in with a UserRelationshipInterface
+     * @expectedExceptionMessage You must be logged in with a UserIdentifierInterface
      */
     public function testGetAuthenticatedUserTokenReturnsString()
     {
@@ -69,7 +69,7 @@ class LoggedInUserProviderSecurityContextTest extends \PHPUnit_Framework_TestCas
 
     /**
      * @expectedException \Symfony\Component\Security\Core\Exception\AccessDeniedException
-     * @expectedExceptionMessage You must be logged in with a UserRelationshipInterface
+     * @expectedExceptionMessage You must be logged in with a UserIdentifierInterface
      */
     public function testGetAuthenticatedUserReturnsObjectNotInstanceParticipantInterface()
     {

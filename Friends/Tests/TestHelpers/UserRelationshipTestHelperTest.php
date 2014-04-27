@@ -10,10 +10,10 @@
 
 namespace Miliooo\Friends\Tests\TestHelpers;
 
-use Miliooo\Friends\TestHelpers\UserRelationshipTestHelper;
+use Miliooo\Friends\TestHelpers\UserIdentifierTestHelper;
 
 /**
- * Test file for Miliooo\Friends\TestHelpers\UserRelationshipTestHelper
+ * Test file for Miliooo\Friends\TestHelpers\UserIdentifierTestHelper
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
@@ -21,7 +21,7 @@ class UserRelationshipTestHelperTest extends \PHPUnit_Framework_TestCase
 {
     public function testGetUserRelationshipId()
     {
-        $object = new UserRelationshipTestHelper('5');
-        $this->assertEquals(5, $object->getUserRelationshipId());
+        $object = new UserIdentifierTestHelper('5');
+        $this->assertEquals(5, $object->getIdentifierId());
     }
 }

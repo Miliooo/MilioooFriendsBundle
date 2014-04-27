@@ -10,7 +10,7 @@
 
 namespace Miliooo\Friends\ValueObjects;
 
-use Miliooo\Friends\User\UserRelationshipInterface;
+use Miliooo\Friends\User\UserIdentifierInterface;
 use Miliooo\Friends\Exceptions\IdenticalFollowerFollowedException;
 
 /**
@@ -23,26 +23,26 @@ use Miliooo\Friends\Exceptions\IdenticalFollowerFollowedException;
 class UserRelationship
 {
     /**
-     * @var UserRelationshipInterface
+     * @var UserIdentifierInterface
      */
     private $follower;
 
     /**
-     * @var UserRelationshipInterface
+     * @var UserIdentifierInterface
      */
     private $followed;
 
     /**
      * Constructor.
      *
-     * @param UserRelationshipInterface $follower
-     * @param UserRelationshipInterface $followed
+     * @param UserIdentifierInterface $follower
+     * @param UserIdentifierInterface $followed
      *
      * @throws IdenticalFollowerFollowedException
      */
-    public function __construct(UserRelationshipInterface $follower, UserRelationshipInterface $followed)
+    public function __construct(UserIdentifierInterface $follower, UserIdentifierInterface $followed)
     {
-        if ($follower->getUserRelationshipId() === $followed->getUserRelationshipId()) {
+        if ($follower->getIdentifierId() === $followed->getIdentifierId()) {
             throw new IdenticalFollowerFollowedException();
         }
 
@@ -53,7 +53,7 @@ class UserRelationship
     /**
      * Gets the follower.
      *
-     * @return UserRelationshipInterface
+     * @return UserIdentifierInterface
      */
     public function getFollower()
     {
@@ -63,7 +63,7 @@ class UserRelationship
     /**
      * Gets the person who is being followed.
      *
-     * @return UserRelationshipInterface
+     * @return UserIdentifierInterface
      */
     public function getFollowed()
     {

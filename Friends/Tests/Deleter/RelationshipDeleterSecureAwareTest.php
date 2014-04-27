@@ -51,7 +51,7 @@ class RelationshipDeleterSecureAwareTest extends \PHPUnit_Framework_TestCase
         $this->specification = $this->getMock('Miliooo\Friends\Specifications\CanDeleteRelationshipSpecificationInterface');
         $this->deleter = $this->getMock('Miliooo\Friends\Deleter\RelationshipDeleterInterface');
         $this->deleterSecureAware = new RelationshipDeleterSecureAware($this->deleter, $this->specification);
-        $this->user = $this->getMock('Miliooo\Friends\User\UserRelationshipInterface');
+        $this->user = $this->getMock('Miliooo\Friends\User\UserIdentifierInterface');
         $this->relationship = $this->getMock('Miliooo\Friends\Model\RelationshipInterface');
     }
 

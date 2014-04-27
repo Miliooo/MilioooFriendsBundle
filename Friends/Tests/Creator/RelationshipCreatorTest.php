@@ -12,8 +12,8 @@ namespace Miliooo\Friends\Tests\Creator;
 
 use Miliooo\Friends\Creator\RelationshipCreator;
 use Miliooo\Friends\ValueObjects\UserRelationship;
-use Miliooo\Friends\TestHelpers\UserRelationshipTestHelper;
-use Miliooo\Friends\User\UserRelationshipInterface;
+use Miliooo\Friends\TestHelpers\UserIdentifierTestHelper;
+use Miliooo\Friends\User\UserIdentifierInterface;
 
 /**
  * Class RelationshipCreatorTest
@@ -53,12 +53,12 @@ class RelationshipCreatorTest extends \PHPUnit_Framework_TestCase
     private $relationship;
 
     /**
-     * @var UserRelationshipInterface
+     * @var UserIdentifierInterface
      */
     private $follower;
 
     /**
-     * @var UserRelationshipInterface
+     * @var UserIdentifierInterface
      */
     private $followed;
 
@@ -67,8 +67,8 @@ class RelationshipCreatorTest extends \PHPUnit_Framework_TestCase
         $this->relationshipRepository = $this->getMock('Miliooo\Friends\Repository\RelationshipRepositoryInterface');
         $this->fqcn = 'Miliooo\FriendsBundle\Entity\Relationship';
         $this->creator = new RelationshipCreator($this->relationshipRepository, $this->fqcn);
-        $this->follower = new UserRelationshipTestHelper('1');
-        $this->followed = new UserRelationshipTestHelper('2');
+        $this->follower = new UserIdentifierTestHelper('1');
+        $this->followed = new UserIdentifierTestHelper('2');
         $this->userRelationship = new UserRelationship($this->follower, $this->followed);
         $this->dateCreated = new \DateTime('2013-10-10');
         $this->relationship = $this->getMockBuilder('Miliooo\FriendsBundle\Entity\Relationship')

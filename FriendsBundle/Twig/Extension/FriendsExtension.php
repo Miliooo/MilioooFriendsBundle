@@ -94,7 +94,7 @@ class FriendsExtension extends \Twig_Extension
     /**
      * Checks if there is a logged in user.
      *
-     * @return false|\Miliooo\Friends\User\UserRelationshipInterface
+     * @return false|\Miliooo\Friends\User\UserIdentifierInterface
      */
     protected function hasLoggedInUser()
     {

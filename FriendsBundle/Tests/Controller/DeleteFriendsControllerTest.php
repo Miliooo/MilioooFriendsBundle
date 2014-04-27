@@ -12,7 +12,7 @@ namespace Miliooo\FriendsBundle\Tests\Controller;
 
 use Miliooo\Friends\Command\DeleteRelationshipCommand;
 use Miliooo\FriendsBundle\Controller\DeleteFriendsController;
-use Miliooo\Friends\TestHelpers\UserRelationshipTestHelper;
+use Miliooo\Friends\TestHelpers\UserIdentifierTestHelper;
 use Miliooo\Friends\ValueObjects\UserRelationship;
 
 /**
@@ -63,8 +63,8 @@ class DeleteFriendsControllerTest extends \PHPUnit_Framework_TestCase
             $this->handler
         );
 
-        $this->loggedInUser = new UserRelationshipTestHelper('1');
-        $this->followed = new UserRelationshipTestHelper('2');
+        $this->loggedInUser = new UserIdentifierTestHelper('1');
+        $this->followed = new UserIdentifierTestHelper('2');
         $this->relationship = $this->getMock('Miliooo\Friends\Model\RelationshipInterface');
     }
 

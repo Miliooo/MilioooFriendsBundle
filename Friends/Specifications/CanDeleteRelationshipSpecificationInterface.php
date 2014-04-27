@@ -10,7 +10,7 @@
 
 namespace Miliooo\Friends\Specifications;
 
-use Miliooo\Friends\User\UserRelationshipInterface;
+use Miliooo\Friends\User\UserIdentifierInterface;
 use Miliooo\Friends\Model\RelationshipInterface;
 
 /**
@@ -23,10 +23,10 @@ interface CanDeleteRelationshipSpecificationInterface
     /**
      * Decides whether the given user can delete the given relationship.
      *
-     * @param UserRelationshipInterface $user
+     * @param UserIdentifierInterface $user
      * @param RelationshipInterface     $relationship
      *
      * @return boolean true if the given user can delete the given relationship, false otherwise
      */
-    public function isSatisfiedBy(UserRelationshipInterface $user, RelationshipInterface $relationship);
+    public function isSatisfiedBy(UserIdentifierInterface $user, RelationshipInterface $relationship);
 }

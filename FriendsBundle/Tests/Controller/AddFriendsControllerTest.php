@@ -11,8 +11,7 @@
 namespace Miliooo\FriendsBundle\Tests\Controller;
 
 use Miliooo\FriendsBundle\Controller\AddFriendsController;
-use Miliooo\Friends\TestHelpers\UserRelationshipTestHelper;
-use Miliooo\Friends\ValueObjects\UserRelationship;
+use Miliooo\Friends\TestHelpers\UserIdentifierTestHelper;
 
 
 /**
@@ -59,8 +58,8 @@ class AddFriendsControllerTest extends \PHPUnit_Framework_TestCase
             $this->transformer
         );
 
-        $this->loggedInUser = new UserRelationshipTestHelper('1');
-        $this->followed = new UserRelationshipTestHelper('2');
+        $this->loggedInUser = new UserIdentifierTestHelper('1');
+        $this->followed = new UserIdentifierTestHelper('2');
     }
 
     public function testAddFriendsAction()

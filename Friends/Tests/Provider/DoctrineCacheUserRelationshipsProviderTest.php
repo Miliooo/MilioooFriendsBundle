@@ -38,7 +38,7 @@ class DoctrineCacheUserRelationshipsProviderTest extends \PHPUnit_Framework_Test
         $this->cache = $this->getMock('Doctrine\Common\Cache\Cache');
         $this->provider = $this->getMock('Miliooo\Friends\Provider\UserRelationshipsProviderInterface');
         $this->cacheProvider = new DoctrineCacheUserRelationshipsProvider($this->cache, $this->provider);
-        $this->userRelationship = $this->getMock('Miliooo\Friends\User\UserRelationshipInterface');
+        $this->userRelationship = $this->getMock('Miliooo\Friends\User\UserIdentifierInterface');
     }
 
     public function testInterface()
@@ -48,7 +48,7 @@ class DoctrineCacheUserRelationshipsProviderTest extends \PHPUnit_Framework_Test
 
     public function test_get_user_relationship_with_cache_false()
     {
-        $this->userRelationship->expects($this->once())->method('getUserRelationshipId')->will($this->returnValue(5));
+        $this->userRelationship->expects($this->once())->method('getIdentifierId')->will($this->returnValue(5));
 
         $this->cache->expects($this->once())->method('fetch')->with('miliooo_friends_provider_5')
             ->will($this->returnValue(false));
@@ -64,7 +64,7 @@ class DoctrineCacheUserRelationshipsProviderTest extends \PHPUnit_Framework_Test
 
     public function test_get_user_relationship_with_cache()
     {
-        $this->userRelationship->expects($this->once())->method('getUserRelationshipId')->will($this->returnValue(5));
+        $this->userRelationship->expects($this->once())->method('getIdentifierId')->will($this->returnValue(5));
 
         $this->cache->expects($this->once())->method('fetch')->with('miliooo_friends_provider_5')
             ->will($this->returnValue('foo'));

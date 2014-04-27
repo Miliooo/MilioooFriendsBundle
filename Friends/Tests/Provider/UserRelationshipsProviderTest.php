@@ -51,9 +51,9 @@ class UserRelationshipsProviderTest extends \PHPUnit_Framework_TestCase
         $this->repository = $this->getMock('Miliooo\Friends\Repository\RelationshipRepositoryInterface');
         $this->provider = new UserRelationshipsProvider($this->repository);
 
-        $this->user = $this->getMock('Miliooo\Friends\User\UserRelationshipInterface');
+        $this->user = $this->getMock('Miliooo\Friends\User\UserIdentifierInterface');
         $this->relationship = $this->getMock('Miliooo\Friends\Model\RelationshipInterface');
-        $this->follower = $this->getMock('Miliooo\Friends\User\UserRelationshipInterface');
+        $this->follower = $this->getMock('Miliooo\Friends\User\UserIdentifierInterface');
     }
 
     public function testInterface()
@@ -74,7 +74,7 @@ class UserRelationshipsProviderTest extends \PHPUnit_Framework_TestCase
         $this->relationship->expects($this->once())->method('getFollower')
             ->will($this->returnValue($this->follower));
 
-        $this->follower->expects($this->once())->method('getUserRelationshipId')->will($this->returnValue(2));
+        $this->follower->expects($this->once())->method('getIdentifierId')->will($this->returnValue(2));
 
         $result = $this->provider->getUserRelationships($this->user);
 

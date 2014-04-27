@@ -11,7 +11,7 @@
 namespace Miliooo\Tests\ValueObjects;
 
 use Miliooo\Friends\ValueObjects\UserRelationship;
-use Miliooo\Friends\TestHelpers\UserRelationshipTestHelper;
+use Miliooo\Friends\TestHelpers\UserIdentifierTestHelper;
 
 /**
  * Test file for Miliooo\Friends\ValueObjects\UserRelationship
@@ -25,15 +25,15 @@ class UserRelationshipTest extends \PHPUnit_Framework_TestCase
      */
     public function testIdenticalFollowerFollowedThrowsException()
     {
-        $follower = new UserRelationshipTestHelper('1');
-        $followed = new UserRelationshipTestHelper('1');
+        $follower = new UserIdentifierTestHelper('1');
+        $followed = new UserIdentifierTestHelper('1');
         new UserRelationship($follower, $followed);
     }
 
     public function testValidUserRelationship()
     {
-        $follower = new UserRelationshipTestHelper('1');
-        $followed = new UserRelationshipTestHelper('2');
+        $follower = new UserIdentifierTestHelper('1');
+        $followed = new UserIdentifierTestHelper('2');
         $userRelationship = new UserRelationship($follower, $followed);
 
         $this->assertEquals($follower, $userRelationship->getFollower());

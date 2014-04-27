@@ -11,7 +11,7 @@
 namespace Miliooo\Friends\Command;
 
 use Miliooo\Friends\ValueObjects\UserRelationship;
-use Miliooo\Friends\User\UserRelationshipInterface;
+use Miliooo\Friends\User\UserIdentifierInterface;
 
 /**
  * Class DeleteRelationshipCommand
@@ -26,16 +26,16 @@ class DeleteRelationshipCommand
     protected $userRelationship;
 
     /**
-     * @var UserRelationshipInterface
+     * @var UserIdentifierInterface
      */
     protected $loggedInUser;
 
     /**
      * Sets the logged in user.
      *
-     * @param UserRelationshipInterface $loggedInUser
+     * @param UserIdentifierInterface $loggedInUser
      */
-    public function setLoggedInUser(UserRelationshipInterface $loggedInUser)
+    public function setLoggedInUser(UserIdentifierInterface $loggedInUser)
     {
         $this->loggedInUser = $loggedInUser;
     }
@@ -43,7 +43,7 @@ class DeleteRelationshipCommand
     /**
      * Returns the logged in user.
      *
-     * @return UserRelationshipInterface
+     * @return UserIdentifierInterface
      */
     public function getLoggedInUser()
     {

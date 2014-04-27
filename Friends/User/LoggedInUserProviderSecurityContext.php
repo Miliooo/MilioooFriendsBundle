@@ -44,8 +44,8 @@ class LoggedInUserProviderSecurityContext implements LoggedInUserProviderInterfa
     {
         $loggedInUser = $this->securityContext->getToken()->getUser();
 
-        if (!is_object($loggedInUser) || !$loggedInUser instanceof UserRelationshipInterface) {
-            throw new AccessDeniedException('You must be logged in with a UserRelationshipInterface');
+        if (!is_object($loggedInUser) || !$loggedInUser instanceof UserIdentifierInterface) {
+            throw new AccessDeniedException('You must be logged in with a UserIdentifierInterface');
         }
 
         return $loggedInUser;

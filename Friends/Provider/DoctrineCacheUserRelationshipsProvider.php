@@ -11,7 +11,7 @@
 namespace Miliooo\Friends\Provider;
 
 use Miliooo\Friends\Model\UserRelationships;
-use Miliooo\Friends\User\UserRelationshipInterface;
+use Miliooo\Friends\User\UserIdentifierInterface;
 use Doctrine\Common\Cache\Cache;
 
 /**
@@ -44,11 +44,11 @@ class DoctrineCacheUserRelationshipsProvider implements UserRelationshipsProvide
     /**
      * Gets the user relationships.
      *
-     * @param UserRelationshipInterface $user The user for whom we get the relationships.
+     * @param UserIdentifierInterface $user The user for whom we get the relationships.
      *
      * @return UserRelationships An user relationships object.
      */
-    public function getUserRelationships(UserRelationshipInterface $user)
+    public function getUserRelationships(UserIdentifierInterface $user)
     {
         $key = $this->getCacheKey($user);
         $cachedDate = $this->cache->fetch($key);
@@ -66,12 +66,12 @@ class DoctrineCacheUserRelationshipsProvider implements UserRelationshipsProvide
     /**
      * Returns the cache key we use for storing and retrieving the cache.
      *
-     * @param UserRelationshipInterface $user
+     * @param UserIdentifierInterface $user
      *
      * @return string
      */
-    protected function getCacheKey(UserRelationshipInterface $user)
+    protected function getCacheKey(UserIdentifierInterface $user)
     {
-        return 'miliooo_friends_provider_'.$user->getUserRelationshipId();
+        return 'miliooo_friends_provider_'.$user->getIdentifierId();
     }
 }

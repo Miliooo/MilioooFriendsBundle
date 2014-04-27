@@ -15,7 +15,7 @@ namespace Miliooo\Friends\User;
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
-interface UserRelationshipInterface
+interface UserIdentifierInterface
 {
     /**
      * Gets an unique identifier for the participant
@@ -25,5 +25,5 @@ interface UserRelationshipInterface
      *
      * @return string The unique identifier
      */
-    public function getUserRelationshipId();
+    public function getIdentifierId();
 }

@@ -69,10 +69,11 @@ class DoctrineCacheProviderDeleter implements EventSubscriberInterface
      */
     protected function doCacheUpdates(RelationshipEvent $event)
     {
-        $follower = $event->getRelationship()->getFollower();
-        $followed = $event->getRelationship()->getFollowed();
+        $relationship = $event->getRelationship();
+        $follower = $relationship->getFollower();
+        $followed = $relationship->getFollowed();
 
-        $this->cache->delete('miliooo_friends_provider_'.$follower->getUserRelationshipId());
-        $this->cache->delete('miliooo_friends_provider_'.$followed->getUserRelationshipId());
+        $this->cache->delete('miliooo_friends_provider_'.$follower->getIdentifierId());
+        $this->cache->delete('miliooo_friends_provider_'.$followed->getIdentifierId());
     }
 }
