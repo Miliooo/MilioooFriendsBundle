@@ -76,13 +76,26 @@ class DoctrineCacheProviderDeleterTest extends \PHPUnit_Framework_TestCase
 
     public function testOnRelationshipCreated()
     {
-        $this->event->expects($this->once())->method('getRelationship')->will($this->returnValue($this->relationship));
-        $this->relationship->expects($this->once())->method('getFollower')->will($this->returnValue($this->follower));
-        $this->relationship->expects($this->once())->method('getFollowed')->will($this->returnValue($this->followed));
+        $this->expectsCacheRemoval();
+
         $this->testObject->onRelationshipCreated($this->event);
     }
 
+    public function testOnRelationshipRemoved()
+    {
+        $this->expectsCacheRemoval();
+        $this->testObject->onRelationshipRemoved($this->event);
+    }
 
+    private function expectsCacheRemoval()
+    {
+        $this->event->expects($this->once())->method('getRelationship')->will($this->returnValue($this->relationship));
+        $this->relationship->expects($this->once())->method('getFollower')->will($this->returnValue($this->follower));
+        $this->relationship->expects($this->once())->method('getFollowed')->will($this->returnValue($this->followed));
+        $this->follower->expects($this->once())->method('getIdentifierId')->will($this->returnValue(1));
+        $this->followed->expects($this->once())->method('getIdentifierId')->will($this->returnValue(2));
 
-
+        $this->cache->expects($this->at(0))->method('delete')->with('miliooo_friends_provider_1');
+        $this->cache->expects($this->at(1))->method('delete')->with('miliooo_friends_provider_2');
+    }
 }
