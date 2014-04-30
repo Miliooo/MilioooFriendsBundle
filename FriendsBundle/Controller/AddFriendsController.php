@@ -61,7 +61,7 @@ class AddFriendsController extends AbstractFriendActionsController
         $userRelationshipOrError = $this->getUserRelationshipOrHandleError($loggedInUser, $followed);
 
         if ($userRelationshipOrError instanceof JsonResponse) {
-           return $userRelationshipOrError;
+            return $userRelationshipOrError;
         }
 
         //let's rename it so it makes sense again
