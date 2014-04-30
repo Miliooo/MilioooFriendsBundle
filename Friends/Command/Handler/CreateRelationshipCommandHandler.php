@@ -15,6 +15,7 @@ use Miliooo\Friends\Command\CreateRelationshipCommand;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Miliooo\Friends\Event\MilioooFriendsEvents;
 use Miliooo\Friends\Event\RelationshipEvent;
+use Miliooo\Friends\Exceptions\RelationshipAlreadyExistsException;
 
 /**
  * The create relationship command handler is responsible for handling the create relationship command.
@@ -52,7 +53,7 @@ class CreateRelationshipCommandHandler implements CreateRelationshipCommandHandl
     {
         try {
             $newRelationship = $this->relationshipCreator->createRelationship($command->getUserRelationship(), $command->getDateCreated());
-        } catch (\Exception $e) {
+        } catch (RelationshipAlreadyExistsException $e) {
             return;
         }
 

@@ -16,6 +16,7 @@ use Miliooo\Friends\Event\MilioooFriendsEvents;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Miliooo\Friends\Event\RelationshipEvent;
 use Miliooo\Friends\Repository\RelationshipRepositoryInterface;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * Handler responsible for handling the delete relationship command.
@@ -76,7 +77,7 @@ class DeleteRelationshipCommandHandler implements DeleteRelationshipCommandHandl
                 $command->getLoggedInUser(),
                 $relationship
             );
-        } catch (\Exception $e) {
+        } catch (AccessDeniedException $e) {
             return;
         }
 
