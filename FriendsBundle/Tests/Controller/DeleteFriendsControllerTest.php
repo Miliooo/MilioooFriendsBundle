@@ -73,7 +73,14 @@ class DeleteFriendsControllerTest extends \PHPUnit_Framework_TestCase
         $this->expectsLoggedInUser();
         $this->expectsFollowedObject();
         $this->expectsHandlerCall();
-        $this->controller->deleteRelationship(2);
+        $result = $this->controller->deleteRelationship(2);
+
+        $this->assertInstanceOf('Symfony\Component\HttpFoundation\JsonResponse', $result);
+
+        $data = $this->controller->getData();
+        $this->assertEquals($data['user_relationship_id'], 2);
+        $this->assertEquals($data['action'], 'unfollow');
+        $this->assertArrayNotHasKey('error', $data);
     }
 
     protected function expectsLoggedInUser()

@@ -11,11 +11,10 @@
 namespace Miliooo\FriendsBundle\Controller;
 
 use Miliooo\Friends\User\LoggedInUserProviderInterface;
+use Miliooo\Friends\User\UserIdentifierInterface;
 use Miliooo\Friends\User\UserRelationshipTransformerInterface;
 use Miliooo\Friends\ValueObjects\UserRelationship;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Miliooo\Friends\Exceptions\FriendException;
-use Miliooo\Friends\Exceptions\IdenticalFollowerFollowedException;
 use Miliooo\Friends\Command\Handler\DeleteRelationshipCommandHandlerInterface;
 use Miliooo\Friends\Command\DeleteRelationshipCommand;
 
@@ -24,18 +23,8 @@ use Miliooo\Friends\Command\DeleteRelationshipCommand;
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
-class DeleteFriendsController
+class DeleteFriendsController extends AbstractFriendActionsController
 {
-    /**
-     * @var LoggedInUserProviderInterface
-     */
-    private $loggedInUserProvider;
-
-    /**
-     * @var UserRelationshipTransformerInterface
-     */
-    private $transformer;
-
     /**
      * @var DeleteRelationshipCommandHandlerInterface
      */
@@ -44,19 +33,17 @@ class DeleteFriendsController
     /**
      * Constructor.
      *
-     * @param LoggedInUserProviderInterface             $loggedInUserProvider
+     * @param LoggedInUserProviderInterface             $userProvider
      * @param UserRelationshipTransformerInterface      $transformer
      * @param DeleteRelationshipCommandHandlerInterface $handler
      */
     public function __construct(
-        LoggedInUserProviderInterface $loggedInUserProvider,
+        LoggedInUserProviderInterface $userProvider,
         UserRelationshipTransformerInterface $transformer,
         DeleteRelationshipCommandHandlerInterface $handler
-    )
-    {
-        $this->loggedInUserProvider = $loggedInUserProvider;
-        $this->transformer = $transformer;
+    ) {
         $this->handler = $handler;
+        parent::__construct($userProvider, $transformer);
     }
 
     /**
@@ -66,39 +53,44 @@ class DeleteFriendsController
      */
     public function deleteRelationship($userRelationshipId)
     {
-        $loggedInUser = $this->loggedInUserProvider->getAuthenticatedUser();
-        $followed = $this->transformer->transformToObject($userRelationshipId);
+        $loggedInUser = $this->getLoggedInUser();
+        $followed = $this->getUserIdentifierObject($userRelationshipId);
 
-        $data['user_relationship_id'] = $userRelationshipId;
-        $data['error'] = false;
-        $data['action'] = 'unfollow';
+        $this->setData('action', 'unfollow');
+        $this->setData('user_relationship_id', $userRelationshipId);
 
-        try {
-            $userRelationship = new UserRelationship($loggedInUser, $followed);
-        } catch (FriendException $e) {
-            if ($e instanceof IdenticalFollowerFollowedException) {
-                //impossible user relationship
-                $data['error'] = true;
-            } else {
-                //uncaught error
-                $data['error'] = true;
-            }
-        }
-        //we can't create the user relationship value object. This should never happen
-        if ($data['error'] === true) {
+        $userRelationshipOrError = $this->getUserRelationshipOrHandleError($loggedInUser, $followed);
 
-            return new JsonResponse($data);
+        if ($userRelationshipOrError instanceof JsonResponse) {
+            return $userRelationshipOrError;
         }
 
-        $command = new DeleteRelationshipCommand();
-        $command->setUserRelationship($userRelationship);
-        $command->setLoggedInUser($loggedInUser);
+        //let's rename it so it makes sense again
+        $userRelationship = $userRelationshipOrError;
+
+        $command = $this->getCommandForHandler($userRelationship, $loggedInUser);
+
         //since we want our handlers to be able to be asynchronous we don't check if they really handled it.
         //worst thing that could happen is an user deleted a friendship but it didn't got deleted.
         $this->handler->handle($command);
 
-        $data['success'] = true;
+        return new JsonResponse($this->getData());
+    }
 
-        return new JsonResponse($data);
+    /**
+     * Creates the command we will use in our handle.
+     *
+     * @param UserRelationship        $userRelationship
+     * @param UserIdentifierInterface $loggedInUser
+     *
+     * @return DeleteRelationshipCommand
+     */
+    protected function getCommandForHandler(UserRelationship $userRelationship, UserIdentifierInterface $loggedInUser)
+    {
+        $command = new DeleteRelationshipCommand();
+        $command->setUserRelationship($userRelationship);
+        $command->setLoggedInUser($loggedInUser);
+
+        return $command;
     }
 }

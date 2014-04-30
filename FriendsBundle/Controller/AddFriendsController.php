@@ -13,9 +13,6 @@ namespace Miliooo\FriendsBundle\Controller;
 use Miliooo\Friends\User\LoggedInUserProviderInterface;
 use Miliooo\Friends\User\UserRelationshipTransformerInterface;
 use Miliooo\Friends\ValueObjects\UserRelationship;
-use Miliooo\Friends\Exceptions\FriendException;
-use Miliooo\Friends\Exceptions\IdenticalFollowerFollowedException;
-use Symfony\Component\HttpFoundation\Response;
 use Miliooo\Friends\Command\Handler\CreateRelationshipCommandHandlerInterface;
 use Miliooo\Friends\Command\CreateRelationshipCommand;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -25,22 +22,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
-class AddFriendsController
+class AddFriendsController extends AbstractFriendActionsController
 {
-    /**
-     * A logged in user provider instance.
-     *
-     * @var LoggedInUserProviderInterface
-     */
-    protected $userProvider;
-
-    /**
-     * An userRelationshipTransformer instance.
-     *
-     * @var UserRelationshipTransformerInterface
-     */
-    protected $transformer;
-
     /**
      * @var CreateRelationshipCommandHandlerInterface
      */
@@ -59,48 +42,61 @@ class AddFriendsController
         UserRelationshipTransformerInterface $transformer
     ) {
         $this->handler = $handler;
-        $this->userProvider = $userProvider;
-        $this->transformer = $transformer;
+        parent::__construct($userProvider, $transformer);
     }
 
     /**
      * @param mixed $userRelationshipId
      *
-     * @return Response
+     * @return JsonResponse
      */
     public function addFriendsAction($userRelationshipId)
     {
-        $loggedInUser = $this->userProvider->getAuthenticatedUser();
-        $followed = $this->transformer->transformToObject($userRelationshipId);
+        $loggedInUser = $this->getLoggedInUser();
+        $followed = $this->getUserIdentifierObject($userRelationshipId);
 
-        $data['action'] = 'follow';
+        $this->setData('action', 'follow');
+        $this->setData('user_relationship_id', $userRelationshipId);
 
-        try {
-            $userRelationship = new UserRelationship($loggedInUser, $followed);
-        } catch (FriendException $e) {
-            if ($e instanceof IdenticalFollowerFollowedException) {
-                $data['error'] = true;
-            } else {
-               $data['error'] = true;
-            }
-            //since we don't have a valid user relationship object we need to return here.
-            return new JsonResponse($data);
+        $userRelationshipOrError = $this->getUserRelationshipOrHandleError($loggedInUser, $followed);
+
+        if ($userRelationshipOrError instanceof JsonResponse) {
+           return $userRelationshipOrError;
         }
 
+        //let's rename it so it makes sense again
+        $userRelationship = $userRelationshipOrError;
+        $command = $this->getCommandForHandler($userRelationship);
+
+        $this->doHandleCommand($command);
+
+        return new JsonResponse($this->getData());
+    }
+
+    /**
+     * @param UserRelationship $userRelationship
+     *
+     * @return CreateRelationshipCommand
+     */
+    protected function getCommandForHandler(UserRelationship $userRelationship)
+    {
         $command = new CreateRelationshipCommand();
         $command->setDateCreated(new \DateTime('now'));
         $command->setUserRelationship($userRelationship);
 
+        return $command;
+    }
+
+    /**
+     * @param CreateRelationshipCommand $command
+     */
+    protected function doHandleCommand(CreateRelationshipCommand $command)
+    {
         try {
             $this->handler->handle($command);
+
         } catch (\Exception $e) {
-            $data['error'] = true;
-        }
 
-        if (!isset($data['error'])) {
-            $data['success'] = true;
         }
-
-        return new JsonResponse($data);
     }
 }

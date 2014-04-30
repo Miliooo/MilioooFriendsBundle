@@ -12,7 +12,8 @@ namespace Miliooo\FriendsBundle\Tests\Controller;
 
 use Miliooo\FriendsBundle\Controller\AddFriendsController;
 use Miliooo\Friends\TestHelpers\UserIdentifierTestHelper;
-
+use Miliooo\Friends\Command\CreateRelationshipCommand;
+use Miliooo\Friends\ValueObjects\UserRelationship;
 
 /**
  * Test file for Miliooo\FriendsBundle\Controller\AddFriendsController
@@ -68,7 +69,13 @@ class AddFriendsControllerTest extends \PHPUnit_Framework_TestCase
         $this->expectsTransformedToObject();
         $this->expectsRelationshipCreated();
 
-        $this->controller->addFriendsAction('2');
+        $result = $this->controller->addFriendsAction('2');
+        $this->assertInstanceOf('Symfony\Component\HttpFoundation\JsonResponse', $result);
+
+        $data = $this->controller->getData();
+        $this->assertEquals($data['user_relationship_id'], 2);
+        $this->assertEquals($data['action'], 'follow');
+        $this->assertArrayNotHasKey('error', $data);
     }
 
     protected function expectsLoggedInUser()
@@ -85,6 +92,11 @@ class AddFriendsControllerTest extends \PHPUnit_Framework_TestCase
 
     protected function expectsRelationshipCreated()
     {
-        $this->handler->expects($this->once())->method('handle');
+        $userRelationship = new UserRelationship($this->loggedInUser, $this->followed);
+        $command = new CreateRelationshipCommand();
+        $command->setDateCreated(new \DateTime('now'));
+        $command->setUserRelationship($userRelationship);
+
+        $this->handler->expects($this->once())->method('handle')->with($command);
     }
 }
