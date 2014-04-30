@@ -8,5 +8,6 @@ navigate:
   followers: Leden die je volgen
 
 action:
-  unfollow: Niet langer volgen
+  unfollow: Ontvolgen
   follow: Volgen
+  following: Volg je nu

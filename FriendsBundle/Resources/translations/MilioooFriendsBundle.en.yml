@@ -10,3 +10,4 @@ navigate:
 action:
   unfollow: Unfollow
   follow: Follow
+  following: Following
