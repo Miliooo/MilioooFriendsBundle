@@ -71,6 +71,7 @@ class DeleteFriendsController
 
         $data['user_relationship_id'] = $userRelationshipId;
         $data['error'] = false;
+        $data['action'] = 'unfollow';
 
         try {
             $userRelationship = new UserRelationship($loggedInUser, $followed);

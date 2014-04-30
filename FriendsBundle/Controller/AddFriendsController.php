@@ -73,6 +73,8 @@ class AddFriendsController
         $loggedInUser = $this->userProvider->getAuthenticatedUser();
         $followed = $this->transformer->transformToObject($userRelationshipId);
 
+        $data['action'] = 'follow';
+
         try {
             $userRelationship = new UserRelationship($loggedInUser, $followed);
         } catch (FriendException $e) {
@@ -95,7 +97,9 @@ class AddFriendsController
             $data['error'] = true;
         }
 
-        $data['success'] = true;
+        if (!isset($data['error'])) {
+            $data['success'] = true;
+        }
 
         return new JsonResponse($data);
     }
