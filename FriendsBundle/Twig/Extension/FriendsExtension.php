@@ -38,7 +38,7 @@ class FriendsExtension extends \Twig_Extension
     /**
      * Constructor.
      *
-     * @param LoggedInUserProviderInterface $loggedInUserProvider A logged in user provider instance
+     * @param LoggedInUserProviderInterface      $loggedInUserProvider     A logged in user provider instance
      * @param UserRelationshipsProviderInterface $userRelationshipProvider An user relationship provider instance
      */
     public function __construct(
