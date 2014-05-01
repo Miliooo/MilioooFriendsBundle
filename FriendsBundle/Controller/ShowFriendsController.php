@@ -67,7 +67,7 @@ class ShowFriendsController
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function getFriendsDataAction($userRelationshipId)
+    public function showAction($userRelationshipId)
     {
         $user = $this->getUser($userRelationshipId);
 

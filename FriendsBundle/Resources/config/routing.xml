@@ -13,7 +13,7 @@
     </route>
 
     <route id="miliooo_friends_overview" pattern="/friends_overview/{userRelationshipId}">
-        <default key="_controller">miliooo_friends.controller.show_friends_controller:getFriendsDataAction</default>
+        <default key="_controller">miliooo_friends.controller.show_friends_controller:showAction</default>
     </route>
 
 </routes>
