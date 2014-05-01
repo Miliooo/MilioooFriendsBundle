@@ -40,7 +40,6 @@ abstract class AbstractFriendActionsController
 
     protected $data = [];
 
-
     /**
      * Constructor.
      *
