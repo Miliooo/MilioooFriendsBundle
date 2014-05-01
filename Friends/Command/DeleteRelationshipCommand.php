@@ -10,7 +10,6 @@
 
 namespace Miliooo\Friends\Command;
 
-use Miliooo\Friends\ValueObjects\UserRelationship;
 use Miliooo\Friends\User\UserIdentifierInterface;
 
 /**
@@ -18,13 +17,8 @@ use Miliooo\Friends\User\UserIdentifierInterface;
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
-class DeleteRelationshipCommand
+class DeleteRelationshipCommand extends AbstractRelationshipCommand
 {
-    /**
-     * @var UserRelationship
-     */
-    protected $userRelationship;
-
     /**
      * @var UserIdentifierInterface
      */
@@ -48,25 +42,5 @@ class DeleteRelationshipCommand
     public function getLoggedInUser()
     {
         return $this->loggedInUser;
-    }
-
-    /**
-     * Sets the user relationship we want to delete.
-     *
-     * @param UserRelationship $userRelationship
-     */
-    public function setUserRelationship(UserRelationship $userRelationship)
-    {
-        $this->userRelationship = $userRelationship;
-    }
-
-    /**
-     * Returns the user relationship we want to delete.
-     *
-     * @return UserRelationship
-     */
-    public function getUserRelationship()
-    {
-        return $this->userRelationship;
     }
 }

@@ -10,20 +10,13 @@
 
 namespace Miliooo\Friends\Command;
 
-use Miliooo\Friends\ValueObjects\UserRelationship;
-
 /**
  * Class CreateRelationshipCommand
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
  */
-class CreateRelationshipCommand
+class CreateRelationshipCommand extends AbstractRelationshipCommand
 {
-    /**
-     * @var UserRelationship
-     */
-    protected $userRelationship;
-
     /**
      * @var \DateTime
      */
@@ -47,25 +40,5 @@ class CreateRelationshipCommand
     public function getDateCreated()
     {
         return $this->dateCreated;
-    }
-
-    /**
-     * Sets the user relationship.
-     *
-     * @param UserRelationship $userRelationship
-     */
-    public function setUserRelationship(UserRelationship $userRelationship)
-    {
-        $this->userRelationship = $userRelationship;
-    }
-
-    /**
-     * Returns the user relationship.
-     *
-     * @return UserRelationship
-     */
-    public function getUserRelationship()
-    {
-        return $this->userRelationship;
     }
 }
