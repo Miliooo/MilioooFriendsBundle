@@ -27,7 +27,7 @@ interface RelationshipDeleterSecureInterface
      * Deletes a relationship if the given user has enough rights to do so.
      *
      * @param UserIdentifierInterface $user         The user we want to check the permissions to delete
-     * @param RelationshipInterface     $relationship The relationship we want to check if the user can delete this
+     * @param RelationshipInterface   $relationship The relationship we want to check if the user can delete this
      *
      * @return RelationshipInterface The relationship we deleted.
      *

@@ -24,7 +24,7 @@ class CanDeleteRelationshipSpecification implements CanDeleteRelationshipSpecifi
      * Decides whether the given user can delete the given relationship.
      *
      * @param UserIdentifierInterface $user
-     * @param RelationshipInterface     $relationship
+     * @param RelationshipInterface   $relationship
      *
      * @return boolean true if the given user can delete the given relationship, false otherwise
      */
@@ -37,7 +37,7 @@ class CanDeleteRelationshipSpecification implements CanDeleteRelationshipSpecifi
      * Checks if the given user is the creator of the relationship.
      *
      * @param UserIdentifierInterface $user
-     * @param RelationshipInterface     $relationship
+     * @param RelationshipInterface   $relationship
      *
      * @return boolean true if user is creator of relationship, false otherwise.
      */

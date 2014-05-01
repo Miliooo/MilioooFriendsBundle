@@ -24,7 +24,7 @@ interface CanDeleteRelationshipSpecificationInterface
      * Decides whether the given user can delete the given relationship.
      *
      * @param UserIdentifierInterface $user
-     * @param RelationshipInterface     $relationship
+     * @param RelationshipInterface   $relationship
      *
      * @return boolean true if the given user can delete the given relationship, false otherwise
      */
