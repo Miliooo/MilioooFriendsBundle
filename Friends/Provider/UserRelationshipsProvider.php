@@ -14,7 +14,6 @@ use Miliooo\Friends\Model\UserRelationships;
 use Miliooo\Friends\User\UserIdentifierInterface;
 use Miliooo\Friends\Repository\RelationshipRepositoryInterface;
 
-
 /**
  * Provides the relationships for a single user
  *
@@ -44,7 +43,12 @@ class UserRelationshipsProvider implements UserRelationshipsProviderInterface
     {
         $data = $this->getAllRelationships($user);
 
-        return new UserRelationships($user->getIdentifierId(), $data['friends'], $data['followers'], $data['following']);
+        return new UserRelationships(
+            $user->getIdentifierId(),
+            $data['friends'],
+            $data['followers'],
+            $data['following']
+        );
     }
 
     /**
