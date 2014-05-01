@@ -27,21 +27,21 @@ class ShowFriendsController
      *
      * @var UserRelationshipTransformerInterface
      */
-    private $transformer;
+    protected $transformer;
 
     /**
      * An user relationship provider instance.
      *
      * @varUserRelationshipsProviderInterface
      */
-    private $userRelationshipsProvider;
+     protected $userRelationshipsProvider;
 
     /**
      * A templating instance.
      *
-     * @var \Symfony\Bundle\FrameworkBundle\Templating\EngineInterface
+     * @var EngineInterface
      */
-    private $templating;
+    protected $templating;
 
     /**
      * Constructor.
