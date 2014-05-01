@@ -33,26 +33,36 @@ class UserRelationshipsTest extends \PHPUnit_Framework_TestCase
         $this->relationships = new UserRelationships(5, $friends, $followers, $following);
     }
 
-    public function test_get_followers()
+    public function test_getFollowers()
     {
         $this->assertTrue(in_array(5, $this->relationships->getFollowers()));
         $this->assertCount(3, $this->relationships->getFollowers());
     }
 
-    public function test_is_following()
+    public function test_isFollowing()
     {
         $this->assertTrue($this->relationships->isFollowing(100));
         $this->assertFalse($this->relationships->isFollowing(5));
     }
 
-    public function test_get_friends()
+    public function test_getFriends()
     {
         $this->assertTrue(in_array(20, $this->relationships->getFriends()));
         $this->assertFalse(in_array(100, $this->relationships->getFriends()));
     }
 
-    public function test_get_following()
+    public function test_getFollowing()
     {
         $this->assertTrue(in_array(100, $this->relationships->getFollowing()));
+    }
+
+    public function test_getAllIdentifierIds()
+    {
+        $expectedResult = [20, 10, 7, 9, 100, 5];
+        $result = $this->relationships->getAllIdentifierIds();
+
+        $this->assertCount(6, $result);
+        $this->assertEmpty(array_diff($expectedResult, $result));
+        $this->assertEmpty(array_diff($result, $expectedResult));
     }
 }

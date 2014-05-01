@@ -18,7 +18,7 @@ use Miliooo\Friends\User\UserIdentifierInterface;
  * We use the getRelationshipIds from this class and not the user relationship interface because we want to be able
  * to easily serialize and unserialize this class.
  *
- * Since all the checks for a given relationship between two users only depends on the userRelationshipId there is no need
+ * Since all the checks for a given relationship between two users only depends on the identifierId there is no need
  * to serialize whole user objects.
  *
  * @author Michiel Boeckaert <boeckaert@gmail.com>
@@ -49,9 +49,9 @@ class UserRelationships implements UserRelationshipsInterface
      * Constructor.
      *
      * @param string $ownerId      The UserRelationshipId from the owner
-     * @param []     $friendIds    Array with friend UserRelationshipIds where the keys are the userRelationshipIds
-     * @param []     $followerIds  Array with follower UserRelationshipIds where the keys are the userRelationshipIds
-     * @param []     $followingIds Array with following UserRelationshipIds where the keys are the userRelationshipIds
+     * @param []     $friendIds    Array with friend identifierIds where the keys are the identifierIds
+     * @param []     $followerIds  Array with follower identifierIds where the keys are the identifierIds
+     * @param []     $followingIds Array with following identifierIds where the keys are the identifierIds
      */
     public function __construct($ownerId, array $friendIds, array $followerIds, array $followingIds)
     {
@@ -64,9 +64,9 @@ class UserRelationships implements UserRelationshipsInterface
     /**
      * {@inheritdoc}
      */
-    public function isFollowing($userRelationshipId)
+    public function isFollowing($identifierId)
     {
-        if ($this->isOwnerFriendsWithOrFollowingUser($userRelationshipId)) {
+        if ($this->isOwnerFriendsWithOrFollowingUser($identifierId)) {
             return true;
         }
 
@@ -98,15 +98,25 @@ class UserRelationships implements UserRelationshipsInterface
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function getAllIdentifierIds()
+    {
+        $allIds = array_merge(array_keys($this->followers), array_keys($this->following));
+
+        return array_unique($allIds);
+    }
+
+    /**
      * Checks if the owner is friendIds with or follows the given user.
      *
-     * @param string $userRelationshipId The user for whom we check if the owner is following or friend with him
+     * @param string $identifierId The user for whom we check if the owner is following or friend with him
      *
      * @return boolean True if there is a relationship, false otherwise
      */
-    protected function isOwnerFriendsWithOrFollowingUser($userRelationshipId)
+    protected function isOwnerFriendsWithOrFollowingUser($identifierId)
     {
-        if (array_key_exists($userRelationshipId, $this->friends) || array_key_exists($userRelationshipId, $this->following)) {
+        if (array_key_exists($identifierId, $this->friends) || array_key_exists($identifierId, $this->following)) {
             return true;
         }
 

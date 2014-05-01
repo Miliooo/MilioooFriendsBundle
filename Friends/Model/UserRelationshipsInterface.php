@@ -25,27 +25,34 @@ interface UserRelationshipsInterface
     public function getFollowers();
 
     /**
-     * Checks if the owner is followingIds the given user.
+     * Checks if the owner is following the given user.
      *
      * This can be used to determinate which action to take, follow or no longer follow a given user.
      *
-     * @param string $userRelationshipId The user for whom we check if the owner is following him
+     * @param string $identifierId The user for whom we check if the owner is following him
      *
      * @return boolean True if the owner is following this user, false otherwise.
      */
-    public function isFollowing($userRelationshipId);
+    public function isFollowing($identifierId);
 
     /**
      * Gets whom the owner is following.
      *
-     * @return array Array with UserRelationshipIds for which the owner is following.
+     * @return array Array with IdentifierIds for which the owner is following.
      */
     public function getFollowing();
 
     /**
      * Gets the friends of the owner.
      *
-     * @return Array with UserRelationshipIds for which the owner is friends.
+     * @return Array with IdentifierId for which the owner is friends.
      */
     public function getFriends();
+
+    /**
+     * Gets all the identifier ids for whom the owner has relationships with.
+     *
+     * @return array An array with the unique ids for whom the owner has a relationship with
+     */
+    public function getAllIdentifierIds();
 }
